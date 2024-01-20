@@ -23,7 +23,7 @@ app.layout = html.Div(
                 ),
 
                 html.Div(
-                    className="grid-container",
+                    className="main-container",
                     children=[
                         html.Div(
                             className="graph1", 
@@ -63,12 +63,17 @@ app.layout = html.Div(
             className="static-data",
             children=[
                 html.Div(
-                    children=(
-                        dcc.Graph(
-                        id='static-graph',
-                        figure=fig
+                    className="static-data-container",
+                    children=[
+                        html.Div(
+                            children=(
+                                dcc.Graph(
+                                id='static-data-graph1',
+                                figure=fig
+                                )
+                            )
                         )
-                    )
+                    ]
                 )
             ]
         ),
