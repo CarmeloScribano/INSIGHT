@@ -19,7 +19,7 @@ app.layout = html.Div(
             children=[
                 html.P(
                     className="greeting",
-                    children='Hello John Doe'
+                    children='Hello, John Doe'
                 ),
 
                 html.Div(

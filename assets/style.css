@@ -7,6 +7,10 @@
 
 
 /* Default html element styling */
+html {
+    background-color: var(--light-white);
+}
+
 body {
     margin: 0px;
     -ms-overflow-style: none;
@@ -21,6 +25,9 @@ body::-webkit-scrollbar {
 /* General site styling */
 .greeting {
     background-color: var(--light-white);
+    font-family: 'Arial', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
     padding: var(--graph-padding);
 }
 
@@ -42,6 +49,11 @@ body::-webkit-scrollbar {
 
 
 /* Main graph container organization */
+.main > * {
+    border-style: none !important;
+}
+
+
 .grid-container {
     background-color: var(--light-white);
     display: grid;
