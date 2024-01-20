@@ -57,7 +57,21 @@ app.layout = html.Div(
                     ]
                 )
             ]
-        )
+        ),
+
+        html.Div(
+            className="static-data",
+            children=[
+                html.Div(
+                    children=(
+                        dcc.Graph(
+                        id='static-graph',
+                        figure=fig
+                        )
+                    )
+                )
+            ]
+        ),
     ]
 )
 
