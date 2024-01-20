@@ -3,6 +3,8 @@
     --graph-padding: 10px;
 
     --light-white: #f7f6fc;
+    --white: #ffffff;
+    --black: #000000;
 }
 
 
@@ -34,22 +36,36 @@ body::-webkit-scrollbar {
 
 /* General site layout */
 .sidemenu { 
-    height: 100vh;
-    width: 5vw;
+    border-radius: 10px;
+    margin: 0.5vw;
+    height: 99vh;
+    width: 3vw;
     position: fixed;
     bottom: 0;
     left: 0;
-    background-color: black;
+    background-color: var(--white);
 }
 
 .main {
-    width: 95vw;
+    width: 80vw;
     float: right;
+    margin-right: 16vw;
+}
+
+.static-data {
+    border-radius: 10px;
+    margin: 0.5vw;
+    height: 99vh;
+    width: 15vw;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: var(--white);
 }
 
 
 /* Main graph container organization */
-.main > * {
+html > * {
     border-style: none !important;
 }
 
@@ -81,4 +97,10 @@ svg {
 
 .graph3 { 
     grid-area: graph3; 
+}
+
+
+/* Static Data container organization */
+.static-data > div {
+    margin: 20px;
 }
