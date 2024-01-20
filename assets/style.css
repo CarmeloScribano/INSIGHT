@@ -1,3 +1,12 @@
+/* Variables */
+:root {
+    --graph-padding: 10px;
+
+    --light-white: #f7f6fc;
+}
+
+
+/* Default html element styling */
 body {
     margin: 0px;
     -ms-overflow-style: none;
@@ -9,6 +18,14 @@ body::-webkit-scrollbar {
 }
 
 
+/* General site styling */
+.greeting {
+    background-color: var(--light-white);
+    padding: var(--graph-padding);
+}
+
+
+/* General site layout */
 .sidemenu { 
     height: 100vh;
     width: 5vw;
@@ -23,29 +40,33 @@ body::-webkit-scrollbar {
     float: right;
 }
 
-.header { 
-    height: 10vh;
-    background-color: red;
-}
 
+/* Main graph container organization */
 .grid-container {
+    background-color: var(--light-white);
     display: grid;
     grid-template-areas:
         'graph1 graph1 graph1 graph2 graph2'
         'graph3 graph3 graph3 graph3 graph3';
 }
 
+.grid-container > div {
+    padding: var(--graph-padding);
+}
+
+svg {
+    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
 .graph1 { 
     grid-area: graph1; 
-    background-color: orange;
 }
 
 .graph2 { 
     grid-area: graph2; 
-    background-color: green;
 }
 
 .graph3 { 
     grid-area: graph3; 
-    background-color: blue;
 }

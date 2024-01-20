@@ -17,12 +17,10 @@ app.layout = html.Div(
         html.Div(
             className="main",
             children=[
-                html.Div(
-                    className="header",
-                    children=[
-                        html.P('ConUHacks VIII')
-                    ]
-                ), 
+                html.P(
+                    className="greeting",
+                    children='Hello John Doe'
+                ),
 
                 html.Div(
                     className="grid-container",
@@ -31,25 +29,27 @@ app.layout = html.Div(
                             className="graph1", 
                             children=(
                                 dcc.Graph(
-                                id='example-graph',
+                                id='example-graph1',
                                 figure=fig
                                 )
                             )
                         ),
+
                         html.Div(
                             className="graph2", 
                             children=(
                                 dcc.Graph(
-                                id='example-graph',
+                                id='example-graph2',
                                 figure=fig
                                 )
                             )
                         ),
+
                         html.Div(
                             className="graph3", 
                             children=(
                                 dcc.Graph(
-                                id='example-graph',
+                                id='example-graph3',
                                 figure=fig
                                 )
                             )
