@@ -1,11 +1,10 @@
 /* Variables */
 :root {
-    --graph-padding: 10px;
-
+    --graph-padding: 1vh;
     --primary: #1c1c1c;
     --secondary: #111111;
-    --accent: #e51c24;
-    --white: #dce0ea;
+    --accent: #ef553b;
+    --white: #ffffff;
     --black: #000000;
 }
 
@@ -31,31 +30,13 @@ p, h1, h2, h3, h4, h5 {
 
 
 /* General site styling */
-.greeting {
-    background-color: var(--primary);
-    font-family: 'Arial', sans-serif;
-    font-size: 32px;
-    font-weight: 600;
-    padding: var(--graph-padding);
-    margin: 0px;
-    padding-bottom: 0px;
-}
-
-.greeting-subtitle {
-    background-color: var(--primary);
-    font-family: 'Arial', sans-serif;
-    font-size: 24px;
-    font-weight: 400;
-    padding: var(--graph-padding);
-    margin: 0px;
-}
 
 
 /* General site layout */
 .sidemenu { 
     border-radius: 10px;
-    margin: 0.5vh 0.5vw;
-    height: 99vh;
+    margin: 1vh 0.5vw;
+    height: 98vh;
     width: 3vw;
     text-align: center;
     position: fixed;
@@ -73,11 +54,12 @@ p, h1, h2, h3, h4, h5 {
 
 .static-data {
     border-radius: 10px;
-    margin: 0.5vh 0.5vw;
-    height: 99vh;
+    margin: 1vh 0.5vw;
+    height: 98vh;
     width: 15vw;
     position: fixed;
     right: 0;
+    text-align: center;
     background-color: var(--secondary);
 }
 
@@ -88,7 +70,7 @@ p, h1, h2, h3, h4, h5 {
 }
 
 .sidemenu > div > div {
-    margin: 5vh 0px 5vh 0px;
+    margin: 10vh 0px 10vh 0px;
     color: var(--white);
 }
 
@@ -116,7 +98,7 @@ html > * {
 
 .main-container > div > div > div > div > div > .main-svg {
     border-radius: 10px;
-    box-shadow: rgba(229, 28, 36, 0.1) 0px 4px 12px;
+    box-shadow: rgba(239, 85, 59, 0.1) 0px 0px 5px;
 }
 
 .graph1 { 
@@ -134,10 +116,20 @@ html > * {
 
 /* Static Data container organization */
 .static-data > div {
-    margin: 20px;
+    margin: 1vw;
 }
 
 .static-data-container > div > div > div > div > div > .main-svg {
-    border: 1.5px solid var(--accent);
+    border: 1.5px solid rgba(239, 85, 59, 0.1);
     border-radius: 10px;
+}
+
+.timestamp {
+    font-family: 'Arial', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0px;
+    width: 13vw;
+    position: absolute;
+    bottom: 0.5vw;
 }
