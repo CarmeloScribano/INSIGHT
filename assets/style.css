@@ -52,8 +52,11 @@ body::-webkit-scrollbar {
     margin: 0.5vh 0.5vw;
     height: 99vh;
     width: 3vw;
+    text-align: center;
     position: fixed;
     left: 0;
+    display: flex;
+    align-items: center;
     background-color: var(--white);
 }
 
@@ -71,6 +74,23 @@ body::-webkit-scrollbar {
     position: fixed;
     right: 0;
     background-color: var(--white);
+}
+
+
+/* Side menu styling */
+.sidemenu > div {
+    background-color: var(--light-white);
+    margin: 0px 5px 0px 5px;
+    border-radius: 50px;
+}
+
+.sidemenu > div > svg {
+    margin: 10px 0px 10px 0px;
+    color: var(--black);
+}
+
+.sidemenu > div > svg :hover {
+    color: var(--light-black);
 }
 
 

@@ -12,28 +12,28 @@ app.layout = html.Div(
                 html.Div(
                     children= [
                         DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                            icon="ion:logo-github",
+                            width=30
                         ),
 
                         DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                            icon="ion:logo-github",
+                            width=30
                         ),
 
                         DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                            icon="ion:logo-github",
+                            width=30
                         ),
 
                         DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                            icon="ion:logo-github",
+                            width=30
                         ),
 
                         DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                            icon="ion:logo-github",
+                            width=30
                         )
                     ]
                 )                
