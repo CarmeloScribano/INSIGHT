@@ -2,11 +2,12 @@ from dash import Dash, html, dcc, callback, Output, Input
 import plotly.express as px
 import pandas as pd
 from ingestor import get_data_frame
+from utils import get_trades_by_type
 
 df = get_data_frame("Exchange_1")
 
 def get_acked_trades():
-    return df[df['MessageType'] == 'NewOrderAcknowledged']
+    return get_trades_by_type(df, "NewOrderAcknowledged")
 
 def get_stock_info():
     grouped_df = df.groupby('Symbol')
