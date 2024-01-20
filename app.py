@@ -1,4 +1,5 @@
 from dash import Dash, html, dcc
+from dash_iconify import DashIconify
 from graphs.carmGraph import fig
 
 app = Dash(__name__)
@@ -8,26 +9,55 @@ app.layout = html.Div(
         html.Div(
             className="sidemenu",
             children=[
-                html.Div(className="graph1"),
-                html.Div(className="graph2"),
-                html.Div(className="graph3")
+                html.Div(
+                    children= [
+                        DashIconify(
+                        icon="ion:logo-github",
+                        width=30,
+                        ),
+
+                        DashIconify(
+                        icon="ion:logo-github",
+                        width=30,
+                        ),
+
+                        DashIconify(
+                        icon="ion:logo-github",
+                        width=30,
+                        ),
+
+                        DashIconify(
+                        icon="ion:logo-github",
+                        width=30,
+                        ),
+
+                        DashIconify(
+                        icon="ion:logo-github",
+                        width=30,
+                        )
+                    ]
+                )                
             ]
         ),
         
         html.Div(
             className="main",
             children=[
-                html.P(
-                    className="greeting",
+                html.Div(
                     children=[
-                        'Hello, John Doe'
-                    ]
-                ),
+                        html.P(
+                            className="greeting",
+                            children=[
+                                'Hello, John Doe'
+                            ]
+                        ),
 
-                html.P(
-                    className="greeting-subtitle",
-                    children=[
-                        'View your financial data here!'
+                        html.P(
+                            className="greeting-subtitle",
+                            children=[
+                                'View your financial data here!'
+                            ]
+                        )
                     ]
                 ),
 
