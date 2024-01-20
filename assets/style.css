@@ -2,16 +2,17 @@
 :root {
     --graph-padding: 10px;
 
-    --light-white: #f7f6fc;
-    --white: #ffffff;
-    --light-black: #dce0ea;
+    --primary: #001e2d;
+    --secondary: #00324d;
+    --accent: #e51c24;
+    --white: #dce0ea;
     --black: #000000;
 }
 
 
 /* Default html element styling */
 html {
-    background-color: var(--light-white);
+    background-color: var(--primary);
 }
 
 body {
@@ -24,10 +25,14 @@ body::-webkit-scrollbar {
     display: none;
 }
 
+p, h1, h2, h3, h4, h5 {
+    color: var(--white);
+}
+
 
 /* General site styling */
 .greeting {
-    background-color: var(--light-white);
+    background-color: var(--primary);
     font-family: 'Arial', sans-serif;
     font-size: 32px;
     font-weight: 600;
@@ -37,7 +42,7 @@ body::-webkit-scrollbar {
 }
 
 .greeting-subtitle {
-    background-color: var(--light-white);
+    background-color: var(--primary);
     font-family: 'Arial', sans-serif;
     font-size: 24px;
     font-weight: 400;
@@ -57,7 +62,7 @@ body::-webkit-scrollbar {
     left: 0;
     display: flex;
     align-items: center;
-    background-color: var(--white);
+    background-color: var(--secondary);
 }
 
 .main {
@@ -73,24 +78,22 @@ body::-webkit-scrollbar {
     width: 15vw;
     position: fixed;
     right: 0;
-    background-color: var(--white);
+    background-color: var(--secondary);
 }
 
 
 /* Side menu styling */
 .sidemenu > div {
-    background-color: var(--light-white);
-    margin: 0px 5px 0px 5px;
-    border-radius: 50px;
+    width: 3vw;
 }
 
-.sidemenu > div > svg {
-    margin: 10px 0px 10px 0px;
-    color: var(--black);
+.sidemenu > div > div {
+    margin: 5vh 0px 5vh 0px;
+    color: var(--white);
 }
 
-.sidemenu > div > svg :hover {
-    color: var(--light-black);
+.sidemenu > div > div :hover {
+    color: var(--accent);
 }
 
 
@@ -100,7 +103,7 @@ html > * {
 }
 
 .main-container {
-    background-color: var(--light-white);
+    background-color: var(--primary);
     display: grid;
     grid-template-areas:
         'graph1 graph1 graph1 graph2 graph2'
@@ -135,6 +138,6 @@ html > * {
 }
 
 .static-data-container > div > div > div > div > div > .main-svg {
-    border: 1.5px solid var(--light-black);
+    border: 1.5px solid var(--accent);
     border-radius: 10px;
 }
