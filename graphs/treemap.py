@@ -9,24 +9,8 @@ df = get_data_frame("Exchange_1")
 def get_acked_trades():
     return get_trades_by_type(df, "NewOrderAcknowledged")
 
-def get_stock_info():
-    grouped_df = df.groupby('Symbol')
-
-    # Calculate min, max, and average prices for each stock
-    summary_df = grouped_df['OrderPrice'].agg(['min', 'max', 'mean']).reset_index()
-    return summary_df
-
 def get_graph_data(): 
-    get_acked_trades()
-
-    stats = get_stock_info()
-
-    merged_df = pd.merge(df, stats, on='Symbol')
-
-    symbol_counts = merged_df['Symbol'].value_counts()
-
-    # print(merged_df.min)
-
+    symbol_counts = get_acked_trades()['Symbol'].value_counts()
 
     # Create a new DataFrame for Plotly treemap
     treemap_data = pd.DataFrame({'Symbol': symbol_counts.index, 'Count': symbol_counts.values})
@@ -36,9 +20,13 @@ def get_graph_data():
     fig.update_traces(hovertemplate='<b>Stock:</b> %{label}<br><b>Volume Traded:</b> %{value}')
     return fig
 
-def get_min_price(symbol):
-    # Find the minimum price for a given symbol
-    return df[df['Symbol'] == symbol]['OrderPrice'].min()
+def get_line_graph_data(selected_symbol):
+    # Filter data based on the selected symbol
+    filtered_data = get_acked_trades()[get_acked_trades()['Symbol'] == selected_symbol]
+
+    # Create a line graph for 30s intervals
+    line_fig = px.line(filtered_data, x='TimeStamp', y='OrderPrice', title=f'Line Graph for Symbol: {selected_symbol}')
+    return line_fig
 
 app = Dash(__name__)
 
@@ -47,9 +35,28 @@ app.layout = html.Div([
     dcc.Graph(
         id='symbol-treemap',
         figure=get_graph_data()
+    ),
+    dcc.Graph(
+        id='line-graph',
     )
 ])
 
+@app.callback(
+    Output('line-graph', 'figure'),
+    [Input('symbol-treemap', 'clickData')]
+)
+def update_line_graph(click_data):
+    if click_data is not None:
+        # Extract the selected symbol from the click data
+        selected_symbol = click_data['points'][0]['label']
+
+        # Get line graph data for the selected symbol
+        line_fig = get_line_graph_data(selected_symbol)
+
+        return line_fig
+
+    # If no cell is clicked, hide the graph
+    return {'data': [], 'layout': {'title': 'Click on a cell in the treemap to view line graph'}, 'frames': []}
 
 if __name__ == '__main__':
     app.run(debug=True)
