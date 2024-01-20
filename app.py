@@ -4,27 +4,17 @@ from graphs.carmGraph import fig
 app = Dash(__name__)
 
 app.layout = html.Div(children=[
-    html.H1(children='ConUHacks VIII'),
+    html.H1(children=html.P('ConUHacks VIII')),
 
     html.Div(
-        className="app-header",
+        className="grid-container",
         children=[
-            html.Div('Plotly Dash', className="app-header--title")
+            html.Div(className="item1 bg-black"),
+            html.Div(className="item2 bg-red"),
+            html.Div(className="item3 bg-blue"),
+            html.Div(className="item4 bg-orange"),
+            html.Div(className="item5 bg-green")
         ]
-    ),
-
-    html.Div(
-        children=html.Div([
-            html.H1('Overview'),
-            html.Div('''
-                This is an example of a simple Dash app with
-                local, customized CSS.
-            '''),
-            dcc.Graph(
-                id='example-graph',
-                figure=fig
-            )
-        ])
     )
 ])
 
