@@ -11,29 +11,49 @@ app.layout = html.Div(
             children=[
                 html.Div(
                     children= [
-                        DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                        html.Div(
+                            children=(
+                                DashIconify(
+                                icon="ion:logo-github",
+                                width=30
+                            )
+                            )
                         ),
 
-                        DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                        html.Div(
+                            children=(
+                                DashIconify(
+                                icon="ion:logo-github",
+                                width=30
+                            )
+                            )
                         ),
 
-                        DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                        html.Div(
+                            children=(
+                                DashIconify(
+                                icon="ion:logo-github",
+                                width=30
+                            )
+                            )
                         ),
 
-                        DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                        html.Div(
+                            children=(
+                                DashIconify(
+                                icon="ion:logo-github",
+                                width=30
+                            )
+                            )
                         ),
 
-                        DashIconify(
-                        icon="ion:logo-github",
-                        width=30,
+                        html.Div(
+                            children=(
+                                DashIconify(
+                                icon="ion:logo-github",
+                                width=30
+                            )
+                            )
                         )
                     ]
                 )                
