@@ -31,17 +31,27 @@ body::-webkit-scrollbar {
     font-size: 32px;
     font-weight: 600;
     padding: var(--graph-padding);
+    margin: 0px;
+    padding-bottom: 0px;
+}
+
+.greeting-subtitle {
+    background-color: var(--light-white);
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    padding: var(--graph-padding);
+    margin: 0px;
 }
 
 
 /* General site layout */
 .sidemenu { 
     border-radius: 10px;
-    margin: 0.5vw;
+    margin: 0.5vh 0.5vw;
     height: 99vh;
     width: 3vw;
     position: fixed;
-    bottom: 0;
     left: 0;
     background-color: var(--white);
 }
@@ -54,11 +64,10 @@ body::-webkit-scrollbar {
 
 .static-data {
     border-radius: 10px;
-    margin: 0.5vw;
+    margin: 0.5vh 0.5vw;
     height: 99vh;
     width: 15vw;
     position: fixed;
-    bottom: 0;
     right: 0;
     background-color: var(--white);
 }

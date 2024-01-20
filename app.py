@@ -19,7 +19,16 @@ app.layout = html.Div(
             children=[
                 html.P(
                     className="greeting",
-                    children='Hello, John Doe'
+                    children=[
+                        'Hello, John Doe'
+                    ]
+                ),
+
+                html.P(
+                    className="greeting-subtitle",
+                    children=[
+                        'View your financial data here!'
+                    ]
                 ),
 
                 html.Div(
