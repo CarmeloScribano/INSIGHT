@@ -9,3 +9,6 @@ def get_duration_of_x_and_y(df, msg_x, msg_y):
     merged_pd = msg_x_df.merge(msg_Y_df, on="OrderID")[["TimeStamp_x", "TimeStamp_y"]]
     merged_pd["XYDuration"] = merged_pd["TimeStamp_y"] - merged_pd["TimeStamp_x"]
     return merged_pd
+
+def get_df_rows_by_symbol(df, symbol):
+    return df[df['Symbol'] == symbol]

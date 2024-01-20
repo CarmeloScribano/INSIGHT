@@ -1,32 +1,75 @@
 from dash import Dash, html, dcc, callback, Output, Input
 import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import pandas as pd
 from ingestor import get_data_frame
-from utils import get_trades_by_type
+from utils import get_trades_by_type, get_df_rows_by_symbol
+
+pd.options.mode.copy_on_write = True
 
 df = get_data_frame("Exchange_1")
 
 def get_acked_trades():
     return get_trades_by_type(df, "NewOrderAcknowledged")
 
-def get_graph_data(): 
+def get_merged_df(left, right, key):
+    return pd.merge(left, right, on=key)
+
+def get_volume_df():
     symbol_counts = get_acked_trades()['Symbol'].value_counts()
 
-    # Create a new DataFrame for Plotly treemap
     treemap_data = pd.DataFrame({'Symbol': symbol_counts.index, 'Count': symbol_counts.values})
+    return treemap_data
 
-    # Create a treemap using Plotly Express with animation
+def get_graph_data(): 
+    treemap_data = get_volume_df()
     fig = px.treemap(treemap_data, path=['Symbol'], values='Count', title='Symbol Frequency Treemap')
     fig.update_traces(hovertemplate='<b>Stock:</b> %{label}<br><b>Volume Traded:</b> %{value}')
     return fig
 
-def get_line_graph_data(selected_symbol):
-    # Filter data based on the selected symbol
-    filtered_data = get_acked_trades()[get_acked_trades()['Symbol'] == selected_symbol]
+def get_line_graph_data(selected_symbol, max_points=100):
+    stock_data = get_acked_trades()
+    target_df = get_df_rows_by_symbol(stock_data, selected_symbol)
 
-    # Create a line graph for 30s intervals
-    line_fig = px.line(filtered_data, x='TimeStamp', y='OrderPrice', title=f'Line Graph for Symbol: {selected_symbol}')
-    return line_fig
+    target_df['TimeStamp'] = pd.to_datetime(target_df['TimeStamp'])
+
+    target_df.set_index('TimeStamp', inplace=True)
+
+    target_df_copy = target_df.copy()
+
+    resampled_df = target_df_copy.resample('5s').size().reset_index(name='TradeCount')
+    resampled_df = resampled_df.tail(max_points)  # Keep only the last 'max_points' data points
+
+    fig = go.Figure(data=go.Scatter(x=[resampled_df['TimeStamp'].min()], y=[resampled_df['TradeCount'].min()],
+                                   mode='markers',  # Markers initially
+                                   marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
+                                   name='Trade Count'))
+
+    frames = [
+        go.Frame(data=go.Scatter(x=resampled_df['TimeStamp'][:i+1],
+                                 y=resampled_df['TradeCount'][:i+1],
+                                 mode='markers',  # Markers initially
+                                 marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
+                                 name='Trade Count'),
+                 name=str(i))
+        for i in range(1, len(resampled_df)+1)
+    ]
+
+    frames.append(go.Frame(data=go.Scatter(x=resampled_df['TimeStamp'],
+                                           y=resampled_df['TradeCount'],
+                                           mode='lines+markers',  # Include lines to connect markers
+                                           marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
+                                           line=dict(color='rgba(255, 0, 0, 0.8)', width=2),
+                                           name='Trade Count'),
+                           name='Final'))
+
+    fig.frames = frames
+
+    fig.update_layout(updatemenus=[dict(type='buttons', showactive=False, buttons=[dict(label='Play',
+                                            method='animate', args=[None, dict(frame=dict(duration=250, redraw=True), fromcurrent=True)])])])
+
+    return fig
 
 app = Dash(__name__)
 

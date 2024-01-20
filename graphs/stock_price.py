@@ -1,34 +1,14 @@
+import json
 from ingestor import get_data_frame
-from dash import Dash, html, dcc, Input, Output, callback
-import plotly.express as px
-import pandas as pd
+from utils import get_trades_by_type
 
 df = get_data_frame("Exchange_1")
 
-def get_cancel_request_trades(symbol, request,ack):
-    myDict = {}
-    dff = df[df['Symbol'] == symbol]
-    for ind in dff.index:
-        order_id = df['OrderID'][ind]
-        if df['MessageType'][ind] == request or df['MessageType'][ind] == ack:
-            time_stamp = pd.to_datetime(df['TimeStamp'][ind])
-            message_type = df['MessageType'][ind]
-            subDict = {'TimeStamp':time_stamp,"MessageType":message_type}
-            if order_id not in myDict:  
-                myDict[order_id] = [subDict]
-            else:
-                 myDict[order_id].append(subDict)
-    return myDict  
-
-
-
-def create_df_from_dict(trades_dict):
-
-    df = pd.DataFrame(columns=['TimeStarted',"Duration"])
-    for key, value in trades_dict.items():
-       duration = (value[0]['TimeStamp'].timestamp())
-       print(duration)
-        
-maDict = get_cancel_request_trades("PRQ83","CancelRequest","CancelAcknowledged")
-create_df_from_dict(maDict)
+new_order_requests = get_trades_by_type(df=df, msg_type="CancelRequest").sort_values(by='TimeStamp')
+order_acknowledges = df.groupby(['OrderID']).apply(lambda x: x[x["MessageType"] == "CancelAcknowledged"])
+new_order_requests.reset_index(drop = True, inplace = True)
+order_acknowledges.reset_index(drop = True, inplace = True)
+merged_pd = new_order_requests.merge(order_acknowledges, on="OrderID")[["TimeStamp_x", "TimeStamp_y"]]
+merged_pd["OrderAcknowledgedDuration"] = merged_pd["TimeStamp_y"] - merged_pd["TimeStamp_x"]
+print(merged_pd)
 
