@@ -64,20 +64,6 @@ app.layout = html.Div(
             className="main",
             children=[
                 html.Div(
-                    children=[
-                        html.P(
-                            className="greeting",
-                            children=('Hello, John Doe')
-                        ),
-
-                        html.P(
-                            className="greeting-subtitle",
-                            children=('View your financial data here!')
-                        )
-                    ]
-                ),
-
-                html.Div(
                     className="main-container",
                     children=[
                         html.Div(
@@ -85,6 +71,9 @@ app.layout = html.Div(
                             children=(
                                 dcc.Graph(
                                     id='example-graph1',
+                                    style={
+                                        "height": "48vh",
+                                    },
                                     figure=fig
                                 )
                             )
@@ -95,6 +84,9 @@ app.layout = html.Div(
                             children=(
                                 dcc.Graph(
                                     id='example-graph2',
+                                    style={
+                                        "height": "48vh",
+                                    },
                                     figure=fig
                                 )
                             )
@@ -105,6 +97,9 @@ app.layout = html.Div(
                             children=(
                                 dcc.Graph(
                                     id='example-graph3',
+                                    style={
+                                        "height": "48vh",
+                                    },
                                     figure=fig
                                 )
                             )
@@ -119,7 +114,7 @@ app.layout = html.Div(
             children=(
                 html.Div(
                     className="static-data-container",
-                    children=(
+                    children=[
                         html.Div(
                             children=(
                                 dcc.Graph(
@@ -127,8 +122,13 @@ app.layout = html.Div(
                                     figure=fig
                                 )
                             )
+                        ),
+
+                        html.P(
+                            className="timestamp",
+                            children=('09:29:34')
                         )
-                    )
+                    ]
                 )
             )
         ),
