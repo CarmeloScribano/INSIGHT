@@ -62,7 +62,7 @@ app.layout = html.Div(
         
         html.Div(
             className="main",
-            children=[
+            children=(
                 html.Div(
                     className="main-container",
                     children=[
@@ -106,7 +106,7 @@ app.layout = html.Div(
                         )
                     ]
                 )
-            ]
+            )
         ),
 
         html.Div(
