@@ -23,3 +23,4 @@ TestResults.xml
 # National Bank Exchanges data
 data/
 venv/
+.DS_Store
