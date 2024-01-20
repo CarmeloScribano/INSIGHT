@@ -5,6 +5,7 @@
 from dash import Dash, html, dcc
 import plotly.express as px
 import pandas as pd
+from ingestor import get_data_frame
 
 app = Dash(__name__)
 
