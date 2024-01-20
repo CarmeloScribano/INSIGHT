@@ -25,10 +25,16 @@ def get_cancel_request_trades(symbol, request,ack):
 def create_df_from_dict(trades_dict):
 
     df = pd.DataFrame(columns=['TimeStarted',"Duration"])
+    index = 0
     for key, value in trades_dict.items():
-       duration = (value[0]['TimeStamp'].timestamp())
-       print(duration)
+       duration = (value[1]['TimeStamp'].timestamp()) - (value[0]['TimeStamp'].timestamp())
+       df.loc[index]= ({"TimeStarted":value[0]['TimeStamp'],"Duration":duration})
+       index += 1
+    return df
+    
         
 maDict = get_cancel_request_trades("PRQ83","CancelRequest","CancelAcknowledged")
-create_df_from_dict(maDict)
+print(create_df_from_dict(maDict))
+
+
 
