@@ -8,4 +8,4 @@ df = pd.DataFrame({
     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
 })
 
-fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+fig = px.bar(df, template="plotly_dark", x="Fruit", y="Amount", color="City", barmode="group")

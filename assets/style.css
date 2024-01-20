@@ -2,8 +2,8 @@
 :root {
     --graph-padding: 10px;
 
-    --primary: #001e2d;
-    --secondary: #00324d;
+    --primary: #1c1c1c;
+    --secondary: #111111;
     --accent: #e51c24;
     --white: #dce0ea;
     --black: #000000;
@@ -116,7 +116,7 @@ html > * {
 
 .main-container > div > div > div > div > div > .main-svg {
     border-radius: 10px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 4px 12px;
+    box-shadow: rgba(229, 28, 36, 0.1) 0px 4px 12px;
 }
 
 .graph1 { 
