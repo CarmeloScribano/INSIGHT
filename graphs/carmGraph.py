@@ -1,7 +1,6 @@
 import plotly.express as px
 import pandas as pd
 
-
 df = pd.DataFrame({
     "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
     "Amount": [4, 1, 2, 2, 4, 5],
