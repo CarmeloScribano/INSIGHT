@@ -3,7 +3,7 @@
     --graph-padding: 1vh;
     --primary: #1c1c1c;
     --secondary: #111111;
-    --accent: #ef553b;
+    --accent: #5A4D82;
     --white: #ffffff;
     --black: #000000;
 }
@@ -67,6 +67,8 @@ a {
     display: flex;
     align-items: center;
     background-color: var(--secondary);
+    border-radius: 10px;
+    box-shadow: rgba(90, 77, 130, 0.3) 0px 5px 10px;
 }
 
 .main {
@@ -86,6 +88,8 @@ a {
     align-items: center;
     text-align: center;
     background-color: var(--secondary);
+    border-radius: 10px;
+    box-shadow: rgba(90, 77, 130, 0.3) 0px 5px 10px;
 }
 
 
@@ -137,7 +141,7 @@ html > * {
 .main-container > div > div > div > div > div > .main-svg,
 .main-container > div> div > div > div > div > div > .main-svg {
     border-radius: 10px;
-    box-shadow: rgba(239, 85, 59, 0.1) 0px 0px 5px;
+    box-shadow: rgba(90, 77, 130, 0.3) 0px 5px 10px;
 }
 
 
@@ -147,6 +151,6 @@ html > * {
 }
 
 .static-data-container > div > div > div > div > div > .main-svg {
-    border: 1.5px solid rgba(239, 85, 59, 0.1);
+    border: 1.5px solid rgba(90, 77, 130, 0.1);
     border-radius: 10px;
 }

@@ -176,7 +176,7 @@ app.layout = html.Div(
                             children=[
                                 html.H1(
                                     className="text-center",
-                                    children='Tree Map', 
+                                    children='Symbol Frequency Treemap', 
                                 ),
 
                                 html.Div(
@@ -409,7 +409,6 @@ def update_current_threshold(n_clicks, threshold):
     Input('exchange-dropdown', 'value')
 )
 def update_output(value):
-    # print(value)
     set_exchange(value)
     return f'You have selected {value}'
 

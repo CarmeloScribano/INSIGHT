@@ -18,7 +18,7 @@ def get_volume_df(df):
 
 def get_graph_data(df): 
     treemap_data = get_volume_df(df)
-    fig = px.treemap(treemap_data, template="plotly_dark", path=['Symbol'], values='Count', title='Symbol Frequency Treemap')
+    fig = px.treemap(treemap_data, template="plotly_dark", path=['Symbol'], values='Count')
     fig.update_traces(hovertemplate='<b>Stock:</b> %{label}<br><b>Volume Traded:</b> %{value}')
     return fig
 
@@ -37,7 +37,7 @@ def get_line_graph_data(df, selected_symbol, max_points=100):
 
     fig = go.Figure(data=go.Scatter(x=[resampled_df['TimeStamp'].min()], y=[resampled_df['TradeCount'].min()],
                                    mode='markers',
-                                   marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
+                                   marker=dict(color='rgba(90, 77, 130, 1)', size=10),
                                    name='Trade Count'))
     
     fig.update_layout(template="plotly_dark")
@@ -46,7 +46,7 @@ def get_line_graph_data(df, selected_symbol, max_points=100):
         go.Frame(data=go.Scatter(x=resampled_df['TimeStamp'][:i+1],
                                  y=resampled_df['TradeCount'][:i+1],
                                  mode='markers',
-                                 marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
+                                 marker=dict(color='rgba(90, 77, 130, 1)', size=10),
                                  name='Trade Count'),
                  name=str(i))
         for i in range(1, len(resampled_df)+1)
@@ -55,8 +55,8 @@ def get_line_graph_data(df, selected_symbol, max_points=100):
     frames.append(go.Frame(data=go.Scatter(x=resampled_df['TimeStamp'],
                                            y=resampled_df['TradeCount'],
                                            mode='lines+markers',
-                                           marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
-                                           line=dict(color='rgba(255, 0, 0, 0.8)', width=2),
+                                           marker=dict(color='rgba(90, 77, 130, 1)', size=10),
+                                           line=dict(color='rgba(90, 77, 130, 1)', width=2),
                                            name='Trade Count'),
                            name='Final'))
 
@@ -70,9 +70,9 @@ def get_line_graph_data(df, selected_symbol, max_points=100):
 def get_default_line_graph():
     fig = go.Figure(data=go.Scatter(x=[""], y=[""],
             mode='markers',
-            marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
+            marker=dict(color='rgba(90, 77, 130, 1)', size=10),
             name='Trade Count'))
     
-    fig.update_layout(template="plotly_dark", title='Click on a cell in the treemap to view line graph')
+    fig.update_layout(template="plotly_dark")
 
     return fig
