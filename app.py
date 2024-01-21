@@ -325,7 +325,6 @@ def update_line_graph(click_data):
 def update_acked_output(click_data, children):
     if click_data is not None:
         selected_symbol = click_data['points'][0]['label']
-        print(selected_symbol)
         line_fig = get_acked_figure(get_df(), selected_symbol)
         return line_fig
 
@@ -340,7 +339,6 @@ def update_acked_output(click_data, children):
 def update_output_cancelled(click_data, children):
     if click_data is not None:
         selected_symbol = click_data['points'][0]['label']
-        print(selected_symbol)
         line_fig = get_cancelled_graph(get_df(), current_exchange, selected_symbol)
         return line_fig
 
