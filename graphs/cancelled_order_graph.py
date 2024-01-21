@@ -1,11 +1,11 @@
-from .utils import get_duration_of_x_and_y, get_df_rows_by_symbol
 import plotly.graph_objects as go
+
+from .utils import get_duration_of_x_and_y, get_df_rows_by_symbol
 from datetime import timedelta
 
 def get_cancelled_graph(df, exchange, stock_value):
     dff = get_df_rows_by_symbol(df, stock_value)
 
-    # To be done
     cancel_var = "CancelAcknowledged"
     if exchange == "Exchange 2":
         cancel_var = "Cancelled"
@@ -49,6 +49,3 @@ def get_cancelled_graph(df, exchange, stock_value):
                 yaxis=dict(range=[min(dff['XYDuration'] - 100000), max(dff['XYDuration'] + 100000)]))
 
     return fig
-
-# if __name__ == '__main__':
-#     app.run(debug=True, port=8050)

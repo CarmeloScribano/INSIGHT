@@ -1,7 +1,7 @@
-from graphs.utils import get_duration_of_x_and_y, get_df_rows_by_symbol
 import plotly.graph_objects as go
+
 from datetime import timedelta
-import pandas as pd
+from graphs.utils import get_duration_of_x_and_y, get_df_rows_by_symbol
 
 def get_acked_figure(df, stock_value):
     dff = get_df_rows_by_symbol(df, stock_value)
