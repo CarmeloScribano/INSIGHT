@@ -1,7 +1,9 @@
 import pandas as pd
+import plotly.graph_objects as go
 from dash import Dash, html, dcc, Output, Input, State
 from dash_iconify import DashIconify
 from graphs.ingestor import get_data_frame
+from graphs.utils import get_df_rows_by_symbol, get_duration_of_x_and_y
 from graphs.treemap import get_graph_data, get_line_graph_data, get_default_line_graph
 from graphs.fill_rate import DEFAULT_THRESHOLD, get_heatmap_figure
 
@@ -206,16 +208,29 @@ app.layout = html.Div(
                         
                         html.Div(
                             id='acknowledged-time-stock',
+                            style={'height':'98vh'},
                             children=[
                                 html.H1(
                                     className="text-center",
                                     children='Ackowledged Time Stock', 
                                 ),
-                                dcc.Graph(
-                                    style={
-                                        "height": "88vh",
-                                    },
-                                    figure=get_graph_data()
+                                html.Div(
+                                    children=[
+                                        dcc.Graph(
+                                            id='bubble-stock-id-acked',
+                                            style={'height':'75vh'}
+                                        ),
+                                        dcc.Input(
+                                            id='input-stock-state-acked', 
+                                            type='text', 
+                                            value=''
+                                        ),
+                                        html.Button(
+                                            id='submit-stock-state-acked', 
+                                            n_clicks=0, 
+                                            children='Submit'
+                                        )
+                                    ]
                                 )
                             ]
                         ),
@@ -314,6 +329,45 @@ def update_line_graph(click_data):
         return line_fig
 
     return get_default_line_graph()
+
+
+# Callbacks for Acked graph
+@app.callback(
+        Output('bubble-stock-id-acked', 'figure'),
+        Input('submit-stock-state-acked', 'n_clicks'),
+        State('input-stock-state-acked', 'value'))
+def update_output(n_clicks, stock_value):
+    dff = get_df_rows_by_symbol(df, stock_value)
+
+    dff = get_duration_of_x_and_y(dff, "NewOrderRequest", "NewOrderAcknowledged")
+
+    fig = go.Figure(data=go.Scatter(
+        x=dff['TimeStamp_x'],
+        y=dff['XYDuration'],
+        mode='markers',
+        marker=dict(color=dff['XYDuration'], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
+    ))
+    fig.update_layout(template="plotly_dark")
+
+    frames = [
+        go.Frame(data=go.Scatter(
+            x=dff['TimeStamp_x'][:i + 1],
+            y=dff['XYDuration'][:i + 1],
+            mode='markers',
+            marker=dict(color=dff['XYDuration'][:i + 1], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
+            name='Trade Count'),
+            name=str(i))
+        for i in range(1, len(dff) + 1)
+    ]
+
+    fig.frames = frames
+
+    fig.update_layout(
+        updatemenus=[dict(type='buttons', showactive=False,
+                          buttons=[dict(label='Play',
+                                        method='animate',
+                                        args=[None, dict(frame=dict(duration=150, redraw=True), fromcurrent=True)])])])
+
 
 
 # Callbacks for Fill Rate graph
