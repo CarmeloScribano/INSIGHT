@@ -5,7 +5,7 @@ from dash import Dash, html, dcc, Output, Input
 from dash_iconify import DashIconify
 from graphs.ingestor import get_data_frame
 from graphs.utils import get_trades_by_type, get_df_rows_by_symbol
-from graphs.carmGraph import fig
+
 
 pd.options.mode.copy_on_write = True
 
@@ -152,6 +152,7 @@ app.layout = html.Div(
                     className="main-container",
                     children=[
                         html.Div(
+                            id="treemap",
                             children=[
                                 html.Div(
                                     children=(
@@ -188,6 +189,42 @@ app.layout = html.Div(
                                     figure=get_graph_data()
                                 )
                             )
+                        ),
+                        
+                        html.Div(
+                            children=(
+                                dcc.Graph(
+                                    id='acknowledged-time-stock',
+                                    style={
+                                        "height": "98vh",
+                                    },
+                                    figure=get_graph_data()
+                                )
+                            )
+                        ),
+                        
+                        html.Div(
+                            children=(
+                                dcc.Graph(
+                                    id='acknowledged-time-exchange',
+                                    style={
+                                        "height": "98vh",
+                                    },
+                                    figure=get_graph_data()
+                                )
+                            )
+                        ),
+                        
+                        html.Div(
+                            children=(
+                                dcc.Graph(
+                                    id='cancel-time',
+                                    style={
+                                        "height": "98vh",
+                                    },
+                                    figure=get_graph_data()
+                                )
+                            )
                         )
                     ]
                 )
@@ -201,17 +238,14 @@ app.layout = html.Div(
                     className="static-data-container",
                     children=[
                         html.Div(
-                            children=(
-                                dcc.Graph(
-                                    id='static-data-graph1',
-                                    figure=fig
-                                )
-                            )
+                            children=[
+                                html.P('something')
+                            ]
                         )
                     ]
                 )
             )
-        ),
+        )
     ]
 )
 

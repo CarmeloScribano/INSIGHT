@@ -1,5 +1,6 @@
 import datetime
-from ingestor import get_data_frame
+from graphs.ingestor import get_data_frame
+
 def get_trades_by_type(df, msg_type):
     return df[df['MessageType'] == msg_type]
 
@@ -20,4 +21,4 @@ def get_df_rows_by_symbol(df, symbol):
     return df[df['Symbol'] == symbol]
 
 df = get_data_frame("Exchange_1")
-print(get_duration_of_x_and_y(df,"CancelRequest","CancelAcknowledged"))
+#print(get_duration_of_x_and_y(df,"CancelRequest","CancelAcknowledged"))
