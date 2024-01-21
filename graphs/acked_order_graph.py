@@ -1,27 +1,24 @@
-from ingestor import get_data_frame
-from utils import get_duration_of_x_and_y, get_df_rows_by_symbol
-from dash import Dash, html, dcc, callback, Output, Input, State
+from graphs.utils import get_duration_of_x_and_y, get_df_rows_by_symbol
 import plotly.graph_objects as go
-import pandas as pd
 
-exchange = "Exchange_2"
-df = get_data_frame(exchange)
+# exchange = "Exchange_2"
+# df = get_data_frame(exchange)
 
-is_anim_playing = False
+# is_anim_playing = False
 
-app = Dash(__name__)
+# app = Dash(__name__)
 
-app.layout = html.Div([
-    html.Div("Acknowldedge orders within a Scatter plot"),
-    dcc.Input(id='input-stock-state-acked', type='text', value=''),
-    html.Button(id='submit-stock-state-acked', n_clicks=0, children='Submit'),
-    dcc.Graph(id='bubble-stock-id-acked')])
+# app.layout = html.Div([
+#     html.Div("Acknowldedge orders within a Scatter plot"),
+#     dcc.Input(id='input-stock-state-acked', type='text', value=''),
+#     html.Button(id='submit-stock-state-acked', n_clicks=0, children='Submit'),
+#     dcc.Graph(id='bubble-stock-id-acked')])
 
-@app.callback(
-        Output('bubble-stock-id-acked', 'figure'),
-        Input('submit-stock-state-acked', 'n_clicks'),
-        State('input-stock-state-acked', 'value'))
-def update_output(n_clicks, stock_value):
+# @app.callback(
+#         Output('bubble-stock-id-acked', 'figure'),
+#         Input('submit-stock-state-acked', 'n_clicks'),
+#         State('input-stock-state-acked', 'value'))
+def get_acked_figure(df, stock_value):
     dff = get_df_rows_by_symbol(df, stock_value)
 
     dff = get_duration_of_x_and_y(dff, "NewOrderRequest", "NewOrderAcknowledged")
@@ -55,6 +52,3 @@ def update_output(n_clicks, stock_value):
 
 
     return fig
-
-if __name__ == '__main__':
-    app.run(debug=True, port=8050)

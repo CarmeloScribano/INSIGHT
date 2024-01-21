@@ -2,7 +2,7 @@ def get_trades_by_type(df, msg_type):
     return df[df['MessageType'] == msg_type]
 
 def extract_duration(time):
-    return time.microseconds/10000
+    return time.microseconds
 
 def get_duration_of_x_and_y(df, msg_x, msg_y):
     msg_x_df = get_trades_by_type(df=df, msg_type=msg_x).sort_values(by='TimeStamp')

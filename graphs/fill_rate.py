@@ -1,21 +1,18 @@
 import pandas as pd
 import plotly.graph_objects as go
-from .ingestor import get_data_frame
 from .utils import get_duration_of_x_and_y
-
-raw_df = get_data_frame("Exchange_1")
-df = get_duration_of_x_and_y(raw_df, "NewOrderRequest", "NewOrderAcknowledged")
 
 DEFAULT_THRESHOLD = 30
 
-def merge_raw_with_duration():
+def merge_raw_with_duration(raw_df, df):
     return pd.merge(raw_df, df, on="OrderID", how="outer")
 
-def get_heatmap_figure(threshold):
-
+def get_heatmap_figure(raw_df, threshold):
     threshold = threshold or DEFAULT_THRESHOLD
 
-    mdf = merge_raw_with_duration()
+    df = get_duration_of_x_and_y(raw_df, "NewOrderRequest", "NewOrderAcknowledged")
+
+    mdf = merge_raw_with_duration(raw_df, df)
 
     mdf['AboveThreshold'] = mdf['XYDuration'] < threshold
 

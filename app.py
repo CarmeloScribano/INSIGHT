@@ -1,11 +1,11 @@
 import pandas as pd
-import plotly.graph_objects as go
+
 from dash import Dash, html, dcc, Output, Input, State
 from dash_iconify import DashIconify
 from graphs.ingestor import get_data_frame
-from graphs.utils import get_df_rows_by_symbol, get_duration_of_x_and_y
 from graphs.treemap import get_graph_data, get_line_graph_data, get_default_line_graph
 from graphs.fill_rate import DEFAULT_THRESHOLD, get_heatmap_figure
+from graphs.acked_order_graph import get_acked_figure
 
 
 pd.options.mode.copy_on_write = True
@@ -172,7 +172,7 @@ app.layout = html.Div(
                                             style={
                                                 "height": "43vh",
                                             },
-                                            figure=get_graph_data()
+                                            figure=get_graph_data(df)
                                         )
                                     )
                                 ),
@@ -201,7 +201,7 @@ app.layout = html.Div(
                                     style={
                                         "height": "88vh",
                                     },
-                                    figure=get_graph_data()
+                                    figure=get_graph_data(df)
                                 )
                             ]
                         ),
@@ -228,7 +228,8 @@ app.layout = html.Div(
                                         html.Button(
                                             id='submit-stock-state-acked', 
                                             n_clicks=0, 
-                                            children='Submit'
+                                            children='Submit',
+                                            type='button'
                                         )
                                     ]
                                 )
@@ -246,7 +247,7 @@ app.layout = html.Div(
                                     style={
                                         "height": "88vh",
                                     },
-                                    figure=get_graph_data()
+                                    figure=get_graph_data(df)
                                 )
                             ]
                         ),
@@ -265,7 +266,7 @@ app.layout = html.Div(
                                         dcc.Graph(
                                             id='fill-rate-heatmap', 
                                             style={'height':'75vh'}, 
-                                            figure=get_heatmap_figure(DEFAULT_THRESHOLD)
+                                            figure=get_heatmap_figure(df, DEFAULT_THRESHOLD)
                                         ),
                                         dcc.Input(
                                             id='input-fill-threshold', 
@@ -325,7 +326,7 @@ app.layout = html.Div(
 def update_line_graph(click_data):
     if click_data is not None:
         selected_symbol = click_data['points'][0]['label']
-        line_fig = get_line_graph_data(selected_symbol)
+        line_fig = get_line_graph_data(df, selected_symbol)
         return line_fig
 
     return get_default_line_graph()
@@ -337,38 +338,7 @@ def update_line_graph(click_data):
         Input('submit-stock-state-acked', 'n_clicks'),
         State('input-stock-state-acked', 'value'))
 def update_output(n_clicks, stock_value):
-    dff = get_df_rows_by_symbol(df, stock_value)
-
-    dff = get_duration_of_x_and_y(dff, "NewOrderRequest", "NewOrderAcknowledged")
-
-    fig = go.Figure(data=go.Scatter(
-        x=dff['TimeStamp_x'],
-        y=dff['XYDuration'],
-        mode='markers',
-        marker=dict(color=dff['XYDuration'], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
-    ))
-    fig.update_layout(template="plotly_dark")
-
-    frames = [
-        go.Frame(data=go.Scatter(
-            x=dff['TimeStamp_x'][:i + 1],
-            y=dff['XYDuration'][:i + 1],
-            mode='markers',
-            marker=dict(color=dff['XYDuration'][:i + 1], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
-            name='Trade Count'),
-            name=str(i))
-        for i in range(1, len(dff) + 1)
-    ]
-
-    fig.frames = frames
-
-    fig.update_layout(
-        updatemenus=[dict(type='buttons', showactive=False,
-                          buttons=[dict(label='Play',
-                                        method='animate',
-                                        args=[None, dict(frame=dict(duration=150, redraw=True), fromcurrent=True)])])])
-
-
+    return get_acked_figure(df, stock_value)
 
 # Callbacks for Fill Rate graph
 @app.callback(
@@ -377,7 +347,7 @@ def update_output(n_clicks, stock_value):
     State('input-fill-threshold', 'value')
 )
 def update_heatmap(n_clicks, threshold):
-    return get_heatmap_figure(threshold)
+    return get_heatmap_figure(df, threshold)
 
 @app.callback(
     Output('current-threshold', 'children'),
