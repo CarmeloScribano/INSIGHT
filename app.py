@@ -28,6 +28,8 @@ def set_exchange(exchange):
 
 app = Dash(__name__)
 
+app.title = 'IN$IGHT'
+
 app.layout = html.Div(
     children=[
         html.Div(
