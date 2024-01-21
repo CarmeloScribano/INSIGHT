@@ -1,5 +1,6 @@
 import datetime
 from ingestor import get_data_frame
+
 def get_trades_by_type(df, msg_type):
     return df[df['MessageType'] == msg_type]
 
