@@ -3,8 +3,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pandas as pd
-from ingestor import get_data_frame
-from utils import get_trades_by_type, get_df_rows_by_symbol
+from .ingestor import get_data_frame
+from .utils import get_trades_by_type, get_df_rows_by_symbol
 
 pd.options.mode.copy_on_write = True
 
@@ -21,7 +21,7 @@ def get_volume_df():
 
 def get_graph_data(): 
     treemap_data = get_volume_df()
-    fig = px.treemap(treemap_data, path=['Symbol'], values='Count', title='Symbol Frequency Treemap')
+    fig = px.treemap(treemap_data, template="plotly_dark", path=['Symbol'], values='Count', title='Symbol Frequency Treemap')
     fig.update_traces(hovertemplate='<b>Stock:</b> %{label}<br><b>Volume Traded:</b> %{value}')
     return fig
 
@@ -36,17 +36,19 @@ def get_line_graph_data(selected_symbol, max_points=100):
     target_df_copy = target_df.copy()
 
     resampled_df = target_df_copy.resample('5s').size().reset_index(name='TradeCount')
-    resampled_df = resampled_df.tail(max_points)  # Keep only the last 'max_points' data points
+    resampled_df = resampled_df.tail(max_points)
 
     fig = go.Figure(data=go.Scatter(x=[resampled_df['TimeStamp'].min()], y=[resampled_df['TradeCount'].min()],
-                                   mode='markers',  # Markers initially
+                                   mode='markers',
                                    marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
                                    name='Trade Count'))
+    
+    fig.update_layout(template="plotly_dark")
 
     frames = [
         go.Frame(data=go.Scatter(x=resampled_df['TimeStamp'][:i+1],
                                  y=resampled_df['TradeCount'][:i+1],
-                                 mode='markers',  # Markers initially
+                                 mode='markers',
                                  marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
                                  name='Trade Count'),
                  name=str(i))
@@ -55,7 +57,7 @@ def get_line_graph_data(selected_symbol, max_points=100):
 
     frames.append(go.Frame(data=go.Scatter(x=resampled_df['TimeStamp'],
                                            y=resampled_df['TradeCount'],
-                                           mode='lines+markers',  # Include lines to connect markers
+                                           mode='lines+markers',
                                            marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
                                            line=dict(color='rgba(255, 0, 0, 0.8)', width=2),
                                            name='Trade Count'),
@@ -67,6 +69,17 @@ def get_line_graph_data(selected_symbol, max_points=100):
                                             method='animate', args=[None, dict(frame=dict(duration=250, redraw=True), fromcurrent=True)])])])
 
     return fig
+
+def get_default_line_graph():
+    fig = go.Figure(data=go.Scatter(x=[""], y=[""],
+            mode='markers',
+            marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
+            name='Trade Count'))
+    
+    fig.update_layout(template="plotly_dark", title='Click on a cell in the treemap to view line graph')
+
+    return fig
+
 
 app = Dash(__name__)
 
