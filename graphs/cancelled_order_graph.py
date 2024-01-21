@@ -7,7 +7,7 @@ def get_cancelled_graph(df, exchange, stock_value):
     dff = get_df_rows_by_symbol(df, stock_value)
 
     cancel_var = "CancelAcknowledged"
-    if exchange == "Exchange_2":
+    if exchange == "Exchange 2":
         cancel_var = "Cancelled"
 
     dff = get_duration_of_x_and_y(dff, "CancelRequest", cancel_var)

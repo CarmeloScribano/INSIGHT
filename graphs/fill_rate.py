@@ -32,7 +32,7 @@ def get_heatmap_figure(raw_df, threshold):
         colorscale=[[0, 'rgb(255,0,0)'], [1, 'rgb(0,255,0)']]
     ))
 
-    fig.update_layout(title='Heatmap Aggregated by 5 Seconds',
+    fig.update_layout(title='Fill Rate Heatmap',
                     xaxis_title='Timestamp',
                     yaxis_title='Symbol',
                     template='plotly_dark')
