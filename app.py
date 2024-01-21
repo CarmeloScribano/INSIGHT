@@ -319,7 +319,15 @@ app.layout = html.Div(
                     children=[
                         html.Div(
                             children=[
-                                html.P('something')
+                                html.P(
+                                    id="exchange",
+                                    children='Choose the exchange you want to analyze'
+                                ),
+                                dcc.Dropdown(
+                                    ['Exchange 1', 'Exchange 2', 'Exchange 3'], 
+                                    'Exchange 1', 
+                                    id='exchange-dropdown'
+                                ),
                             ]
                         )
                     ]
@@ -342,6 +350,14 @@ def update_line_graph(click_data):
         return line_fig
 
     return get_default_line_graph()
+
+
+@app.callback(
+    Output('exchange', 'children'),
+    Input('exchange-dropdown', 'value')
+)
+def update_output(value):
+    return f'You have selected {value}'
 
 
 if __name__ == '__main__':
