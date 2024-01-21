@@ -1,7 +1,9 @@
 import pandas as pd
+import plotly.graph_objects as go
 
 from dash import Dash, html, dcc, Output, Input, State
 from dash_iconify import DashIconify
+from graphs.utils import get_df_rows_by_symbol, get_duration_of_x_and_y
 from graphs.ingestor import get_data_frame
 from graphs.treemap import get_graph_data, get_line_graph_data, get_default_line_graph
 from graphs.fill_rate import DEFAULT_THRESHOLD, get_heatmap_figure
@@ -192,22 +194,33 @@ app.layout = html.Div(
                         
                         html.Div(
                             id='cancel-time',
+                            className='text-center',
+                            style={'height':'98vh'},
                             children=[
                                 html.H1(
                                     className="text-center",
                                     children='Cancel Time', 
                                 ),
                                 dcc.Graph(
-                                    style={
-                                        "height": "88vh",
-                                    },
-                                    figure=get_graph_data(df)
+                                    id='bubble-stock-id',
+                                    style={'height':'75vh'}
+                                ),
+                                dcc.Input(
+                                    id='input-stock-state-canceled', 
+                                    type='text', 
+                                    value=''
+                                ),
+                                html.Button(
+                                    id='submit-stock-state', 
+                                    n_clicks=0, 
+                                    children='Submit'
                                 )
                             ]
                         ),
                         
                         html.Div(
                             id='acknowledged-time-stock',
+                            className='text-center',
                             style={'height':'98vh'},
                             children=[
                                 html.H1(
@@ -241,7 +254,7 @@ app.layout = html.Div(
                             children=[
                                 html.H1(
                                     className="text-center",
-                                    children='Ackowledged Time Exchange', 
+                                    children='Sevag\'s Graph', 
                                 ),
                                 dcc.Graph(
                                     style={
@@ -339,6 +352,53 @@ def update_line_graph(click_data):
         State('input-stock-state-acked', 'value'))
 def update_output(n_clicks, stock_value):
     return get_acked_figure(df, stock_value)
+
+
+# Callbacks for Cancelled graph
+@app.callback(
+        Output('bubble-stock-id', 'figure'),
+        Input('submit-stock-state', 'n_clicks'),
+        State('input-stock-state-canceled', 'value'))
+def update_output(n_clicks, stock_value):
+    dff = get_df_rows_by_symbol(df, stock_value)
+
+    # To be done
+    cancel_var = "CancelAcknowledged"
+    if "tbd" == "Exchange_2":
+        cancel_var = "Cancelled"
+
+    dff = get_duration_of_x_and_y(dff, "CancelRequest", cancel_var)
+
+    fig = go.Figure(data=go.Scatter(
+        x=dff['TimeStamp_x'],
+        y=dff['XYDuration'],
+        mode='markers',
+        marker=dict(color=dff['XYDuration'], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
+    ))
+    fig.update_layout(template="plotly_dark")
+
+    frames = [
+        go.Frame(data=go.Scatter(
+            x=dff['TimeStamp_x'][:i + 1],
+            y=dff['XYDuration'][:i + 1],
+            mode='markers',
+            marker=dict(color=dff['XYDuration'][:i + 1], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
+            name='Trade Count'),
+            name=str(i))
+        for i in range(1, len(dff) + 1)
+    ]
+
+    fig.frames = frames
+
+    fig.update_layout(
+        updatemenus=[dict(type='buttons', showactive=False,
+                          buttons=[dict(label='Play',
+                                        method='animate',
+                                        args=[None, dict(frame=dict(duration=150, redraw=True), fromcurrent=True)])])])
+
+
+    return fig
+
 
 # Callbacks for Fill Rate graph
 @app.callback(
