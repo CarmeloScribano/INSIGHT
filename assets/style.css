@@ -12,12 +12,14 @@
 /* Default html element styling */
 html {
     background-color: var(--primary);
+    scroll-behavior: smooth;
 }
 
 body {
     margin: 0px;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    font-family: Verdana, sans-serif;
 }
 
 body::-webkit-scrollbar {
@@ -28,13 +30,25 @@ p, h1, h2, h3, h4, h5 {
     color: var(--white);
 }
 
+a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 20px;
+}
+
+
+/* General site styling */
+.select-clear {
+    display: none;
+}
+
 
 /* General site layout */
 .sidemenu { 
     border-radius: 10px;
     margin: 1vh 0.5vw;
     height: 98vh;
-    width: 3vw;
+    width: 10vw;
     text-align: center;
     position: fixed;
     left: 0;
@@ -44,7 +58,7 @@ p, h1, h2, h3, h4, h5 {
 }
 
 .main {
-    width: 80vw;
+    width: 73vw;
     float: right;
     margin-right: 16vw;
 }
@@ -73,8 +87,17 @@ p, h1, h2, h3, h4, h5 {
     color: var(--white);
 }
 
-.sidemenu > div > div :hover {
-    color: var(--accent);
+.sidemenu-link-container {
+    width: 10vw;
+    text-align: center;
+}
+
+.sidemenu-link-container :hover {
+    color: var(--accent) !important;
+}
+
+.sidemenu-link {
+    margin-top: 0px;
 }
 
 

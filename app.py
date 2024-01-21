@@ -98,48 +98,128 @@ app.layout = html.Div(
                     children= [
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                    href="#treemap",
+                                    children=(
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="mingcute:tree-fill",
+                                                            width=20
+                                                        ),
+                                                        ' Tree Map'
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    )
                                 )
                             )
                         ),
-
+                        
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                    href="#heatmap",
+                                    children=(
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="mdi:hot",
+                                                            width=20
+                                                        ),
+                                                        ' Heat Map'
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    )
                                 )
                             )
                         ),
-
+                        
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                    href="#acknowledged-time-stock",
+                                    children=(
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="ant-design:stock-outlined",
+                                                            width=20
+                                                        ),
+                                                        ' Stock'
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    )
                                 )
                             )
                         ),
-
+                        
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                    href="#acknowledged-time-exchange",
+                                    children=(
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="mdi:exchange",
+                                                            width=20
+                                                        ),
+                                                        ' Exchange'
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    )
                                 )
                             )
                         ),
-
+                        
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                    href="#cancel-time",
+                                    children=(
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="material-symbols:cancel",
+                                                            width=20
+                                                        ),
+                                                        ' Cancel'
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    )
                                 )
                             )
-                        )
+                        ),
                     ]
                 )                
             )
@@ -180,9 +260,9 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
+                            id='heatmap',
                             children=(
                                 dcc.Graph(
-                                    id='heatmap',
                                     style={
                                         "height": "98vh",
                                     },
@@ -192,9 +272,9 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
+                            id='acknowledged-time-stock',
                             children=(
                                 dcc.Graph(
-                                    id='acknowledged-time-stock',
                                     style={
                                         "height": "98vh",
                                     },
@@ -204,9 +284,9 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
+                            id='acknowledged-time-exchange',
                             children=(
                                 dcc.Graph(
-                                    id='acknowledged-time-exchange',
                                     style={
                                         "height": "98vh",
                                     },
@@ -216,9 +296,9 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
+                            id='cancel-time',
                             children=(
                                 dcc.Graph(
-                                    id='cancel-time',
                                     style={
                                         "height": "98vh",
                                     },
@@ -239,7 +319,15 @@ app.layout = html.Div(
                     children=[
                         html.Div(
                             children=[
-                                html.P('something')
+                                html.P(
+                                    id="exchange",
+                                    children='Choose the exchange you want to analyze'
+                                ),
+                                dcc.Dropdown(
+                                    ['Exchange 1', 'Exchange 2', 'Exchange 3'], 
+                                    'Exchange 1', 
+                                    id='exchange-dropdown'
+                                ),
                             ]
                         )
                     ]
@@ -262,6 +350,14 @@ def update_line_graph(click_data):
         return line_fig
 
     return get_default_line_graph()
+
+
+@app.callback(
+    Output('exchange', 'children'),
+    Input('exchange-dropdown', 'value')
+)
+def update_output(value):
+    return f'You have selected {value}'
 
 
 if __name__ == '__main__':
