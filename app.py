@@ -48,10 +48,60 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="mingcute:tree-fill",
+                                                            icon="mdi:exchange",
                                                             width=20
                                                         ),
-                                                        ' Tree Map'
+                                                        ' Trade Volume'
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+
+                        html.Div(
+                            children=(
+                                html.A(
+                                    href="#acknowledged-time-stock",
+                                    children=(
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="ant-design:stock-outlined",
+                                                            width=20
+                                                        ),
+                                                        ' Ack\'ed Trade Delay'
+                                                    ]
+                                                )
+                                            ]
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+
+                        html.Div(
+                            children=(
+                                html.A(
+                                    href="#heatmap",
+                                    children=(
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="mdi:hot",
+                                                            width=20
+                                                        ),
+                                                        ' Fill Rate'
                                                     ]
                                                 )
                                             ]
@@ -76,7 +126,7 @@ app.layout = html.Div(
                                                             icon="material-symbols:cancel",
                                                             width=20
                                                         ),
-                                                        ' Cancel'
+                                                        ' Cancelled Trade Delay'
                                                     ]
                                                 )
                                             ]
@@ -86,80 +136,31 @@ app.layout = html.Div(
                             )
                         ),
                         
-                        html.Div(
-                            children=(
-                                html.A(
-                                    href="#acknowledged-time-stock",
-                                    children=(
-                                        html.Div(
-                                            className="sidemenu-link-container",
-                                            children=[
-                                                html.P(
-                                                    className='sidemenu-link',
-                                                    children=[
-                                                            DashIconify(
-                                                            icon="ant-design:stock-outlined",
-                                                            width=20
-                                                        ),
-                                                        ' Stock'
-                                                    ]
-                                                )
-                                            ]
-                                        )
-                                    )
-                                )
-                            )
-                        ),
+                        # html.Div(
+                        #     children=(
+                        #         html.A(
+                        #             href="#acknowledged-time-exchange",
+                        #             children=(
+                        #                 html.Div(
+                        #                     className="sidemenu-link-container",
+                        #                     children=[
+                        #                         html.P(
+                        #                             className='sidemenu-link',
+                        #                             children=[
+                        #                                     DashIconify(
+                        #                                     icon="mdi:exchange",
+                        #                                     width=20
+                        #                                 ),
+                        #                                 ' Exchange'
+                        #                             ]
+                        #                         )
+                        #                     ]
+                        #                 )
+                        #             )
+                        #         )
+                        #     )
+                        # ),
                         
-                        html.Div(
-                            children=(
-                                html.A(
-                                    href="#acknowledged-time-exchange",
-                                    children=(
-                                        html.Div(
-                                            className="sidemenu-link-container",
-                                            children=[
-                                                html.P(
-                                                    className='sidemenu-link',
-                                                    children=[
-                                                            DashIconify(
-                                                            icon="mdi:exchange",
-                                                            width=20
-                                                        ),
-                                                        ' Exchange'
-                                                    ]
-                                                )
-                                            ]
-                                        )
-                                    )
-                                )
-                            )
-                        ),
-                        
-                        html.Div(
-                            children=(
-                                html.A(
-                                    href="#heatmap",
-                                    children=(
-                                        html.Div(
-                                            className="sidemenu-link-container",
-                                            children=[
-                                                html.P(
-                                                    className='sidemenu-link',
-                                                    children=[
-                                                            DashIconify(
-                                                            icon="mdi:hot",
-                                                            width=20
-                                                        ),
-                                                        ' Heat Map'
-                                                    ]
-                                                )
-                                            ]
-                                        )
-                                    )
-                                )
-                            )
-                        )
                     ]
                 )                
             )
@@ -176,7 +177,7 @@ app.layout = html.Div(
                             children=[
                                 html.H1(
                                     className="text-center",
-                                    children='Symbol Frequency Treemap', 
+                                    children='Trade Volume', 
                                 ),
 
                                 html.Div(
@@ -202,33 +203,7 @@ app.layout = html.Div(
                                 )
                             ]
                         ),
-                        
-                        html.Div(
-                            id='cancel-time',
-                            className='text-center',
-                            style={'height':'98vh'},
-                            children=[
-                                html.H1(
-                                    className="text-center",
-                                    children='Cancel Time', 
-                                ),
-                                dcc.Graph(
-                                    id='bubble-stock-id',
-                                    style={'height':'75vh'}
-                                ),
-                                dcc.Input(
-                                    id='input-stock-state-canceled', 
-                                    type='text', 
-                                    value=''
-                                ),
-                                html.Button(
-                                    id='submit-stock-state', 
-                                    n_clicks=0, 
-                                    children='Submit'
-                                )
-                            ]
-                        ),
-                        
+
                         html.Div(
                             id='acknowledged-time-stock',
                             className='text-center',
@@ -236,7 +211,7 @@ app.layout = html.Div(
                             children=[
                                 html.H1(
                                     className="text-center",
-                                    children='Ackowledged Time Stock', 
+                                    children='Acknowledged Trade Delay', 
                                 ),
                                 html.Div(
                                     children=[
@@ -261,22 +236,6 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
-                            id='acknowledged-time-exchange',
-                            children=[
-                                html.H1(
-                                    className="text-center",
-                                    children='Sevag\'s Graph', 
-                                ),
-                                dcc.Graph(
-                                    style={
-                                        "height": "88vh",
-                                    },
-                                    figure=get_graph_data(get_df())
-                                )
-                            ]
-                        ),
-                        
-                        html.Div(
                             id='heatmap',
                             children=(
                                 html.Div(
@@ -285,7 +244,7 @@ app.layout = html.Div(
                                     children=[
                                         html.H1(
                                             className="text-center",
-                                            children='Heatmap Test', 
+                                            children='Fill Rate', 
                                         ),
                                         dcc.Graph(
                                             id='fill-rate-heatmap', 
@@ -295,7 +254,7 @@ app.layout = html.Div(
                                         dcc.Input(
                                             id='input-fill-threshold', 
                                             type='number', 
-                                            placeholder='30μs'
+                                            placeholder='30'
                                         ),
                                         html.Button(
                                             id='submit-fill-threshold',
@@ -309,7 +268,49 @@ app.layout = html.Div(
                                     ]
                                 )
                             )
-                        )
+                        ),
+                        
+                        html.Div(
+                            id='cancel-time',
+                            className='text-center',
+                            style={'height':'98vh'},
+                            children=[
+                                html.H1(
+                                    className="text-center",
+                                    children='Cancelled Trade Delay', 
+                                ),
+                                dcc.Graph(
+                                    id='bubble-stock-id',
+                                    style={'height':'75vh'}
+                                ),
+                                # dcc.Input(
+                                #     id='input-stock-state-canceled', 
+                                #     type='text', 
+                                #     value=''
+                                # ),
+                                # html.Button(
+                                #     id='submit-stock-state', 
+                                #     n_clicks=0, 
+                                #     children='Submit'
+                                # )
+                            ]
+                        ),
+                        
+                        # html.Div(
+                        #     id='acknowledged-time-exchange',
+                        #     children=[
+                        #         html.H1(
+                        #             className="text-center",
+                        #             children='Sevag\'s Graph', 
+                        #         ),
+                        #         dcc.Graph(
+                        #             style={
+                        #                 "height": "88vh",
+                        #             },
+                        #             figure=get_graph_data(get_df())
+                        #         )
+                        #     ]
+                        # ),
                     ]
                 )
             )

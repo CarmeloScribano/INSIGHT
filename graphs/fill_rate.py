@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from .utils import get_duration_of_x_and_y
 
-DEFAULT_THRESHOLD = 30
+DEFAULT_THRESHOLD = 60
 
 def merge_raw_with_duration(raw_df, df):
     return pd.merge(raw_df, df, on="OrderID", how="outer")
