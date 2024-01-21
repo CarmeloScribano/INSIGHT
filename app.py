@@ -223,13 +223,31 @@ app.layout = html.Div(
                             id='cancel-time',
                             children=(
                                 html.Div(
-                                    style={'height':'98vh'},
+                                    style={'height':'98vh', 'text-align': 'center'},
                                     children=[
-                                        html.H1(children='Heatmap Test', style={'textAlign':'center'}),
-                                        dcc.Graph(id='fill-rate-heatmap', figure=get_heatmap_figure(DEFAULT_THRESHOLD)),
-                                        dcc.Input(id='input-fill-threshold', type='number', placeholder='30μs'),
-                                        html.Button(id='submit-fill-threshold', n_clicks=0, children='Update'),
-                                        html.P(id="test", children=f'Current Threshold: {DEFAULT_THRESHOLD} microseconds')
+                                        html.H1(
+                                            className="text-center",
+                                            children='Heatmap Test', 
+                                        ),
+                                        dcc.Graph(
+                                            id='fill-rate-heatmap', 
+                                            style={'height':'75vh'}, 
+                                            figure=get_heatmap_figure(DEFAULT_THRESHOLD)
+                                        ),
+                                        dcc.Input(
+                                            id='input-fill-threshold', 
+                                            type='number', 
+                                            placeholder='30μs'
+                                        ),
+                                        html.Button(
+                                            id='submit-fill-threshold',
+                                            n_clicks=0, 
+                                            children='Update'
+                                        ),
+                                        html.P(
+                                            id="current-threshold", 
+                                            children=f'Current Threshold: {DEFAULT_THRESHOLD} microseconds'
+                                        )
                                     ]
                                 )
                             )
@@ -266,7 +284,7 @@ app.layout = html.Div(
 )
 
 
-# Treemap click behaviour
+# Callback for Treemap graph
 @app.callback(
     Output('line-graph', 'figure'),
     [Input('symbol-treemap', 'clickData')]
@@ -290,7 +308,7 @@ def update_heatmap(n_clicks, threshold):
     return get_heatmap_figure(threshold)
 
 @app.callback(
-    Output('test', 'children'),
+    Output('current-threshold', 'children'),
     Input('submit-fill-threshold', 'n_clicks'),
     State('input-fill-threshold', 'value')
 )
@@ -298,6 +316,7 @@ def update_current_threshold(n_clicks, threshold):
     return f"Current Threshold: {threshold or DEFAULT_THRESHOLD} microseconds"
 
 
+# Callback for the exchange dropdownlist
 @app.callback(
     Output('exchange', 'children'),
     Input('exchange-dropdown', 'value')

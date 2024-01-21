@@ -42,6 +42,18 @@ a {
     display: none;
 }
 
+.dash-input {
+    margin-top: 5vh;
+}
+
+.current-threshold {
+    margin-top: 2vh;
+}
+
+.text-center {
+    text-align: center;
+}
+
 
 /* General site layout */
 .sidemenu { 
