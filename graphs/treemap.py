@@ -2,9 +2,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 
-from .ingestor import get_data_frame
 from .utils import get_trades_by_type, get_df_rows_by_symbol
-from datetime import timedelta
 
 pd.options.mode.copy_on_write = True
 
@@ -52,10 +50,6 @@ def get_line_graph_data(df, selected_symbol, max_points=100):
                                 mode='markers',
                                 marker=dict(color='rgba(90, 77, 130, 1)', size=10),
                                 name='Trade Count'),
-                                layout=dict(
-                                    xaxis=dict(range=[min(resampled_df['TimeStamp'] - timedelta(seconds=20)), max(resampled_df['TimeStamp']) + timedelta(seconds=20)]),
-                                    yaxis=dict(range=[min(resampled_df['TradeCount'] - 10), max(resampled_df['TradeCount'] + 10)])
-                                ),
                  name=str(i))
         for i in range(1, len(resampled_df)+1)
     ]
@@ -79,12 +73,9 @@ def get_line_graph_data(df, selected_symbol, max_points=100):
                 args=[None, dict(frame=dict(duration=500, redraw=True), fromcurrent=True)]
             )],
             x=1,
-            y=1.45
+            y=1.3
         )
     ])
-
-    fig.update_layout(xaxis=dict(range=[min(resampled_df['TimeStamp'] - timedelta(seconds=20)), max(resampled_df['TimeStamp']) + timedelta(seconds=20)]),
-                                    yaxis=dict(range=[min(resampled_df['TradeCount'] - 10), max(resampled_df['TradeCount'] + 10)]))
 
     return fig
 
