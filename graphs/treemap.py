@@ -13,9 +13,6 @@ df = get_data_frame("Exchange_1")
 def get_acked_trades():
     return get_trades_by_type(df, "NewOrderAcknowledged")
 
-def get_merged_df(left, right, key):
-    return pd.merge(left, right, on=key)
-
 def get_volume_df():
     symbol_counts = get_acked_trades()['Symbol'].value_counts()
 
