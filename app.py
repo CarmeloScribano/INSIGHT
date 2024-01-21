@@ -108,10 +108,10 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="ion:logo-github",
+                                                            icon="mingcute:tree-fill",
                                                             width=20
                                                         ),
-                                                        ' Heatmap'
+                                                        ' Tree Map'
                                                     ]
                                                 )
                                             ]
@@ -133,10 +133,10 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="ion:logo-github",
+                                                            icon="mdi:hot",
                                                             width=20
                                                         ),
-                                                        ' Heatmap'
+                                                        ' Heat Map'
                                                     ]
                                                 )
                                             ]
@@ -158,10 +158,10 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="ion:logo-github",
+                                                            icon="ant-design:stock-outlined",
                                                             width=20
                                                         ),
-                                                        ' Heatmap'
+                                                        ' Stock'
                                                     ]
                                                 )
                                             ]
@@ -183,10 +183,10 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="ion:logo-github",
+                                                            icon="mdi:exchange",
                                                             width=20
                                                         ),
-                                                        ' Heatmap'
+                                                        ' Exchange'
                                                     ]
                                                 )
                                             ]
@@ -208,10 +208,10 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="ion:logo-github",
+                                                            icon="material-symbols:cancel",
                                                             width=20
                                                         ),
-                                                        ' Heatmap'
+                                                        ' Cancel'
                                                     ]
                                                 )
                                             ]
