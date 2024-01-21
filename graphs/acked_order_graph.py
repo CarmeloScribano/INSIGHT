@@ -26,8 +26,6 @@ def get_acked_figure(df, stock_value):
             mode='markers',
             marker=dict(color=dff['XYDuration'][:i + 1], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10)),
             layout=dict(
-                # xaxis=dict(range=[min(dff['TimeStamp_x']), max(dff['TimeStamp_x'])]),
-                # yaxis=dict(range=[min(dff['XYDuration']), max(dff['XYDuration'])])
                 xaxis=dict(range=[min(dff['TimeStamp_x'] - timedelta(seconds=20)), max(dff['TimeStamp_x']) + timedelta(seconds=20)]),
                 yaxis=dict(range=[min(dff['XYDuration'] - 100000), max(dff['XYDuration'] + 100000)])
             ),

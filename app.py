@@ -378,7 +378,7 @@ def update_line_graph(click_data):
         Input('exchange', 'children'),
         # State('input-stock-state-acked', 'value')
         )
-def update_acked_output(click_data, stock_value):
+def update_acked_output(click_data, children):
     if click_data is not None:
         selected_symbol = click_data['points'][0]['label']
         print(selected_symbol)
@@ -389,14 +389,27 @@ def update_acked_output(click_data, stock_value):
     # return get_acked_figure(get_df(), stock_value)
 
 # Callbacks for Cancelled graph
+# @app.callback(
+#         Output('bubble-stock-id', 'figure'),
+#         Input('submit-stock-state', 'n_clicks'),
+#         Input('exchange', 'children'),
+#         State('input-stock-state-canceled', 'value'))
+# def update_output_cancelled(n_clicks, children, stock_value):
+#     global current_exchange
+#     return get_cancelled_graph(get_df(), current_exchange, stock_value)
 @app.callback(
         Output('bubble-stock-id', 'figure'),
-        Input('submit-stock-state', 'n_clicks'),
-        Input('exchange', 'children'),
-        State('input-stock-state-canceled', 'value'))
-def update_output_cancelled(n_clicks, children, stock_value):
-    global current_exchange
-    return get_cancelled_graph(get_df(), current_exchange, stock_value)
+        Input('symbol-treemap', 'clickData'),
+        Input('exchange', 'children'))
+def update_output_cancelled(click_data, children):
+    if click_data is not None:
+        selected_symbol = click_data['points'][0]['label']
+        print(selected_symbol)
+        line_fig = get_cancelled_graph(get_df(), current_exchange, selected_symbol)
+        return line_fig
+
+    return get_default_line_graph()
+    # return get_cancelled_graph(get_df(), current_exchange, stock_value)
 
 
 # Callbacks for Fill Rate graph
