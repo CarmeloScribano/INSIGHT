@@ -158,12 +158,17 @@ app.layout = html.Div(
                         html.Div(
                             id="treemap",
                             children=[
+                                html.H1(
+                                    className="text-center",
+                                    children='Tree Map', 
+                                ),
+
                                 html.Div(
                                     children=(
                                         dcc.Graph(
                                             id='symbol-treemap',
                                             style={
-                                                "height": "48vh",
+                                                "height": "43vh",
                                             },
                                             figure=get_graph_data()
                                         )
@@ -175,7 +180,7 @@ app.layout = html.Div(
                                         dcc.Graph(
                                             id='line-graph',
                                             style={
-                                                "height": "48vh",
+                                                "height": "43vh",
                                             }
                                         )
                                     )
