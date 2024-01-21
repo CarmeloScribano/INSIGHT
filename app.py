@@ -98,48 +98,73 @@ app.layout = html.Div(
                     children= [
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                href="#treemap",
+                                    children=(
+                                        DashIconify(
+                                            icon="ion:logo-github",
+                                            width=30
+                                        )
+                                    )
                                 )
                             )
                         ),
-
+                        
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                href="#heatmap",
+                                    children=(
+                                        DashIconify(
+                                            icon="ion:logo-github",
+                                            width=30
+                                        )
+                                    )
                                 )
                             )
                         ),
-
+                        
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                href="#acknowledged-time-stock",
+                                    children=(
+                                        DashIconify(
+                                            icon="ion:logo-github",
+                                            width=30
+                                        )
+                                    )
                                 )
                             )
                         ),
-
+                        
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                href="#acknowledged-time-exchange",
+                                    children=(
+                                        DashIconify(
+                                            icon="ion:logo-github",
+                                            width=30
+                                        )
+                                    )
                                 )
                             )
                         ),
-
+                        
                         html.Div(
                             children=(
-                                DashIconify(
-                                    icon="ion:logo-github",
-                                    width=30
+                                html.A(
+                                href="#cancel-time",
+                                    children=(
+                                        DashIconify(
+                                            icon="ion:logo-github",
+                                            width=30
+                                        )
+                                    )
                                 )
                             )
-                        )
+                        ),
                     ]
                 )                
             )
@@ -180,9 +205,9 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
+                            id='heatmap',
                             children=(
                                 dcc.Graph(
-                                    id='heatmap',
                                     style={
                                         "height": "98vh",
                                     },
@@ -192,9 +217,9 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
+                            id='acknowledged-time-stock',
                             children=(
                                 dcc.Graph(
-                                    id='acknowledged-time-stock',
                                     style={
                                         "height": "98vh",
                                     },
@@ -204,9 +229,9 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
+                            id='acknowledged-time-exchange',
                             children=(
                                 dcc.Graph(
-                                    id='acknowledged-time-exchange',
                                     style={
                                         "height": "98vh",
                                     },
@@ -216,9 +241,9 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
+                            id='cancel-time',
                             children=(
                                 dcc.Graph(
-                                    id='cancel-time',
                                     style={
                                         "height": "98vh",
                                     },
