@@ -48,7 +48,7 @@ app.layout = html.Div(
                         html.Div(
                             children=(
                                 html.A(
-                                    href="#heatmap",
+                                    href="#cancel-time",
                                     children=(
                                         html.Div(
                                             className="sidemenu-link-container",
@@ -57,10 +57,10 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="mdi:hot",
+                                                            icon="material-symbols:cancel",
                                                             width=20
                                                         ),
-                                                        ' Heat Map'
+                                                        ' Cancel'
                                                     ]
                                                 )
                                             ]
@@ -123,7 +123,7 @@ app.layout = html.Div(
                         html.Div(
                             children=(
                                 html.A(
-                                    href="#cancel-time",
+                                    href="#heatmap",
                                     children=(
                                         html.Div(
                                             className="sidemenu-link-container",
@@ -132,10 +132,10 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="material-symbols:cancel",
+                                                            icon="mdi:hot",
                                                             width=20
                                                         ),
-                                                        ' Cancel'
+                                                        ' Heat Map'
                                                     ]
                                                 )
                                             ]
@@ -143,7 +143,7 @@ app.layout = html.Div(
                                     )
                                 )
                             )
-                        ),
+                        )
                     ]
                 )                
             )
@@ -184,46 +184,59 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
-                            id='heatmap',
-                            children=(
+                            id='cancel-time',
+                            children=[
+                                html.H1(
+                                    className="text-center",
+                                    children='Cancel Time', 
+                                ),
                                 dcc.Graph(
                                     style={
-                                        "height": "98vh",
+                                        "height": "88vh",
                                     },
                                     figure=get_graph_data()
                                 )
-                            )
+                            ]
                         ),
                         
                         html.Div(
                             id='acknowledged-time-stock',
-                            children=(
+                            children=[
+                                html.H1(
+                                    className="text-center",
+                                    children='Ackowledged Time Stock', 
+                                ),
                                 dcc.Graph(
                                     style={
-                                        "height": "98vh",
+                                        "height": "88vh",
                                     },
                                     figure=get_graph_data()
                                 )
-                            )
+                            ]
                         ),
                         
                         html.Div(
                             id='acknowledged-time-exchange',
-                            children=(
+                            children=[
+                                html.H1(
+                                    className="text-center",
+                                    children='Ackowledged Time Exchange', 
+                                ),
                                 dcc.Graph(
                                     style={
-                                        "height": "98vh",
+                                        "height": "88vh",
                                     },
                                     figure=get_graph_data()
                                 )
-                            )
+                            ]
                         ),
                         
                         html.Div(
-                            id='cancel-time',
+                            id='heatmap',
                             children=(
                                 html.Div(
-                                    style={'height':'98vh', 'text-align': 'center'},
+                                    className="text-center",
+                                    style={'height':'98vh'},
                                     children=[
                                         html.H1(
                                             className="text-center",
