@@ -29,9 +29,6 @@ p, h1, h2, h3, h4, h5 {
 }
 
 
-/* General site styling */
-
-
 /* General site layout */
 .sidemenu { 
     border-radius: 10px;
@@ -86,31 +83,24 @@ html > * {
 
 .main-container {
     background-color: var(--primary);
-    display: grid;
-    grid-template-areas:
-        'graph1 graph1 graph1 graph2 graph2'
-        'graph3 graph3 graph3 graph3 graph3';
 }
 
 .main-container > div {
     padding: var(--graph-padding);
 }
 
-.main-container > div > div > div > div > div > .main-svg {
+#symbol-treemap {
+    padding-bottom: var(--graph-padding);
+}
+
+#line-graph {
+    padding-top: var(--graph-padding);
+}
+
+.main-container > div > div > div > div > div > .main-svg,
+.main-container > div> div > div > div > div > div > .main-svg {
     border-radius: 10px;
     box-shadow: rgba(239, 85, 59, 0.1) 0px 0px 5px;
-}
-
-.graph1 { 
-    grid-area: graph1; 
-}
-
-.graph2 { 
-    grid-area: graph2; 
-}
-
-.graph3 { 
-    grid-area: graph3; 
 }
 
 
@@ -122,14 +112,4 @@ html > * {
 .static-data-container > div > div > div > div > div > .main-svg {
     border: 1.5px solid rgba(239, 85, 59, 0.1);
     border-radius: 10px;
-}
-
-.timestamp {
-    font-family: 'Arial', sans-serif;
-    font-size: 32px;
-    font-weight: 600;
-    margin: 0px;
-    width: 13vw;
-    position: absolute;
-    bottom: 0.5vw;
 }
