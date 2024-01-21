@@ -11,6 +11,8 @@ pd.options.mode.copy_on_write = True
 
 df = get_data_frame("Exchange_1")
 
+
+# Treemap logic
 def get_acked_trades():
     return get_trades_by_type(df, "NewOrderAcknowledged")
 
@@ -80,7 +82,7 @@ def get_default_line_graph():
             marker=dict(color='rgba(255, 0, 0, 0.8)', size=10),
             name='Trade Count'))
     
-    fig.update_layout(template="plotly_dark")
+    fig.update_layout(template="plotly_dark", title='Click on a cell in the treemap to view line graph')
 
     return fig
     
@@ -150,39 +152,40 @@ app.layout = html.Div(
                     className="main-container",
                     children=[
                         html.Div(
-                            className="graph1", 
+                            children=[
+                                html.Div(
+                                    children=(
+                                        dcc.Graph(
+                                            id='symbol-treemap',
+                                            style={
+                                                "height": "48vh",
+                                            },
+                                            figure=get_graph_data()
+                                        )
+                                    )
+                                ),
+
+                                html.Div(
+                                    children=(
+                                        dcc.Graph(
+                                            id='line-graph',
+                                            style={
+                                                "height": "48vh",
+                                            }
+                                        )
+                                    )
+                                )
+                            ]
+                        ),
+                        
+                        html.Div(
                             children=(
                                 dcc.Graph(
-                                    id='symbol-treemap',
+                                    id='heatmap',
                                     style={
-                                        "height": "48vh",
+                                        "height": "98vh",
                                     },
                                     figure=get_graph_data()
-                                )
-                            )
-                        ),
-
-                        html.Div(
-                            className="graph2", 
-                            children=(
-                                dcc.Graph(
-                                    id='example-graph2',
-                                    style={
-                                        "height": "48vh",
-                                    },
-                                    figure=fig
-                                )
-                            )
-                        ),
-
-                        html.Div(
-                            className="graph3", 
-                            children=(
-                                dcc.Graph(
-                                    id='line-graph',
-                                    style={
-                                        "height": "48vh",
-                                    }
                                 )
                             )
                         )
@@ -204,11 +207,6 @@ app.layout = html.Div(
                                     figure=fig
                                 )
                             )
-                        ),
-
-                        html.P(
-                            className="timestamp",
-                            children=('09:29:34')
                         )
                     ]
                 )
