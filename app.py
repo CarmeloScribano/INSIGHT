@@ -48,9 +48,10 @@ app.layout = html.Div(
                                                     children=[
                                                         DashIconify(
                                                             icon='mdi:exchange',
-                                                            width=20
+                                                            width=25
                                                         ),
-                                                        ' Trade Volume'
+                                                        html.Br(),
+                                                        'Trade Volume'
                                                     ]
                                                 )
                                             )
@@ -73,9 +74,10 @@ app.layout = html.Div(
                                                     children=[
                                                         DashIconify(
                                                             icon='ant-design:stock-outlined',
-                                                            width=20
+                                                            width=25
                                                         ),
-                                                        ' Ack\'ed Trade Delay'
+                                                        html.Br(),
+                                                        'Ack\'ed Trade Delay'
                                                     ]
                                                 )
                                             )
@@ -98,9 +100,10 @@ app.layout = html.Div(
                                                     children=[
                                                         DashIconify(
                                                             icon='mdi:hot',
-                                                            width=20
+                                                            width=25
                                                         ),
-                                                        ' Fill Rate'
+                                                        html.Br(),
+                                                        'Fill Rate'
                                                     ]
                                                 )
                                             )
@@ -123,9 +126,10 @@ app.layout = html.Div(
                                                     children=[
                                                         DashIconify(
                                                             icon='material-symbols:cancel',
-                                                            width=20
+                                                            width=25
                                                         ),
-                                                        ' Cancelled Trade Delay'
+                                                        html.Br(),
+                                                        'Cancelled Trade Delay'
                                                     ]
                                                 )
                                             )
@@ -133,33 +137,7 @@ app.layout = html.Div(
                                     )
                                 )
                             )
-                        )
-                        
-                        # html.Div(
-                        #     children=(
-                        #         html.A(
-                        #             href='#acknowledged-time-exchange',
-                        #             children=(
-                        #                 html.Div(
-                        #                     className='sidemenu-link-container',
-                        #                     children=(
-                        #                         html.P(
-                        #                             className='sidemenu-link',
-                        #                             children=[
-                    #                                     DashIconify(
-                        #                                     icon='mdi:exchange',
-                        #                                     width=20
-                        #                                 ),
-                        #                                 ' Exchange'
-                        #                             ]
-                        #                         )
-                        #                     )
-                        #                 )
-                        #             )
-                        #         )
-                        #     )
-                        # ),
-                        
+                        )                        
                     ]
                 )                
             )
@@ -217,7 +195,7 @@ app.layout = html.Div(
                                         dcc.Graph(
                                             id='bubble-stock-id-acked',
                                             style={
-                                                'height':'75vh'
+                                                'height':'88vh'
                                             }
                                         )                                    
                                     ]
@@ -248,7 +226,7 @@ app.layout = html.Div(
                                         dcc.Input(
                                             id='input-fill-threshold', 
                                             type='number', 
-                                            placeholder='30'
+                                            placeholder='60'
                                         ),
 
                                         html.Button(
@@ -280,7 +258,7 @@ app.layout = html.Div(
                                 dcc.Graph(
                                     id='bubble-stock-id',
                                     style={
-                                        'height':'75vh'
+                                        'height':'88vh'
                                     }
                                 )
                             ]
@@ -394,7 +372,7 @@ def update_current_threshold(n_clicks, threshold):
 )
 def update_output(value):
     set_exchange(value)
-    return f'You have selected {value}'
+    return 'Select the exchange you want to use.'
 
 
 if __name__ == '__main__':
