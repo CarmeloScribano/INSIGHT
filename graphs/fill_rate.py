@@ -1,9 +1,8 @@
-from dash import Dash, html, dcc, callback, Output, Input, State
-import plotly.express as px
 import pandas as pd
-from ingestor import get_data_frame
-from utils import get_trades_by_type, get_duration_of_x_and_y
 import plotly.graph_objects as go
+from dash import Dash, html, dcc, Output, Input, State
+from .ingestor import get_data_frame
+from .utils import get_trades_by_type, get_duration_of_x_and_y
 
 raw_df = get_data_frame("Exchange_1")
 df = get_duration_of_x_and_y(raw_df, "NewOrderRequest", "NewOrderAcknowledged")

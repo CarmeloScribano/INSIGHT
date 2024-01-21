@@ -1,11 +1,9 @@
-import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
-from dash import Dash, html, dcc, Output, Input
+from dash import Dash, html, dcc, Output, Input, State
 from dash_iconify import DashIconify
 from graphs.ingestor import get_data_frame
 from graphs.treemap import get_graph_data, get_line_graph_data, get_default_line_graph
-
+from graphs.fill_rate import DEFAULT_THRESHOLD, get_heatmap_figure
 
 
 pd.options.mode.copy_on_write = True
@@ -13,7 +11,6 @@ pd.options.mode.copy_on_write = True
 df = get_data_frame("Exchange_1")
 
     
-
 app = Dash(__name__)
 
 app.layout = html.Div(
@@ -225,11 +222,15 @@ app.layout = html.Div(
                         html.Div(
                             id='cancel-time',
                             children=(
-                                dcc.Graph(
-                                    style={
-                                        "height": "98vh",
-                                    },
-                                    figure=get_graph_data()
+                                html.Div(
+                                    style={'height':'98vh'},
+                                    children=[
+                                        html.H1(children='Heatmap Test', style={'textAlign':'center'}),
+                                        dcc.Graph(id='fill-rate-heatmap', figure=get_heatmap_figure(DEFAULT_THRESHOLD)),
+                                        dcc.Input(id='input-fill-threshold', type='number', placeholder='30μs'),
+                                        html.Button(id='submit-fill-threshold', n_clicks=0, children='Update'),
+                                        html.P(id="test", children=f'Current Threshold: {DEFAULT_THRESHOLD} microseconds')
+                                    ]
                                 )
                             )
                         )
@@ -277,6 +278,24 @@ def update_line_graph(click_data):
         return line_fig
 
     return get_default_line_graph()
+
+
+# Callbacks for Fill Rate graph
+@app.callback(
+    Output('fill-rate-heatmap', 'figure'),
+    Input('submit-fill-threshold', 'n_clicks'),
+    State('input-fill-threshold', 'value')
+)
+def update_heatmap(n_clicks, threshold):
+    return get_heatmap_figure(threshold)
+
+@app.callback(
+    Output('test', 'children'),
+    Input('submit-fill-threshold', 'n_clicks'),
+    State('input-fill-threshold', 'value')
+)
+def update_current_threshold(n_clicks, threshold):
+    return f"Current Threshold: {threshold or DEFAULT_THRESHOLD} microseconds"
 
 
 @app.callback(
