@@ -12,8 +12,8 @@ def get_cancelled_graph(df, exchange, stock_value):
     dff = get_duration_of_x_and_y(dff, "CancelRequest", cancel_var)
 
     fig = go.Figure(data=go.Scatter(
-        x=dff['TimeStamp_x'],
-        y=dff['XYDuration'],
+        x=[dff['TimeStamp_x'].min()],
+        y=[dff['XYDuration'].min()],
         mode='markers',
         marker=dict(color=dff['XYDuration'], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
     ))

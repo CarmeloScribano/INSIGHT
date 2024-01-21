@@ -244,17 +244,17 @@ app.layout = html.Div(
                                             id='bubble-stock-id-acked',
                                             style={'height':'75vh'}
                                         ),
-                                        dcc.Input(
-                                            id='input-stock-state-acked', 
-                                            type='text', 
-                                            value=''
-                                        ),
-                                        html.Button(
-                                            id='submit-stock-state-acked', 
-                                            n_clicks=0, 
-                                            children='Submit',
-                                            type='button'
-                                        )
+                                        # dcc.Input(
+                                        #     id='input-stock-state-acked', 
+                                        #     type='text', 
+                                        #     value=''
+                                        # ),
+                                        # html.Button(
+                                        #     id='submit-stock-state-acked', 
+                                        #     n_clicks=0, 
+                                        #     children='Submit',
+                                        #     type='button'
+                                        # )
                                     ]
                                 )
                             ]
@@ -364,14 +364,29 @@ def update_line_graph(click_data):
 
 
 # Callbacks for Acked graph
+# @app.callback(
+#         Output('bubble-stock-id-acked', 'figure'),
+#         Input('submit-stock-state-acked', 'n_clicks'),
+#         Input('exchange', 'children'),
+#         State('input-stock-state-acked', 'value'))
+# def update_acked_output(n_clicks, chidlren, stock_value):
+#     return get_acked_figure(get_df(), stock_value)
+
 @app.callback(
         Output('bubble-stock-id-acked', 'figure'),
-        Input('submit-stock-state-acked', 'n_clicks'),
+        Input('symbol-treemap', 'clickData'),
         Input('exchange', 'children'),
-        State('input-stock-state-acked', 'value'))
-def update_acked_output(n_clicks, chidlren, stock_value):
-    return get_acked_figure(get_df(), stock_value)
+        # State('input-stock-state-acked', 'value')
+        )
+def update_acked_output(click_data, stock_value):
+    if click_data is not None:
+        selected_symbol = click_data['points'][0]['label']
+        print(selected_symbol)
+        line_fig = get_acked_figure(get_df(), selected_symbol)
+        return line_fig
 
+    return get_default_line_graph()
+    # return get_acked_figure(get_df(), stock_value)
 
 # Callbacks for Cancelled graph
 @app.callback(
