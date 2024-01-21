@@ -99,11 +99,22 @@ app.layout = html.Div(
                         html.Div(
                             children=(
                                 html.A(
-                                href="#treemap",
+                                    href="#treemap",
                                     children=(
-                                        DashIconify(
-                                            icon="ion:logo-github",
-                                            width=30
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="ion:logo-github",
+                                                            width=20
+                                                        ),
+                                                        ' Heatmap'
+                                                    ]
+                                                )
+                                            ]
                                         )
                                     )
                                 )
@@ -113,11 +124,22 @@ app.layout = html.Div(
                         html.Div(
                             children=(
                                 html.A(
-                                href="#heatmap",
+                                    href="#heatmap",
                                     children=(
-                                        DashIconify(
-                                            icon="ion:logo-github",
-                                            width=30
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="ion:logo-github",
+                                                            width=20
+                                                        ),
+                                                        ' Heatmap'
+                                                    ]
+                                                )
+                                            ]
                                         )
                                     )
                                 )
@@ -127,11 +149,22 @@ app.layout = html.Div(
                         html.Div(
                             children=(
                                 html.A(
-                                href="#acknowledged-time-stock",
+                                    href="#acknowledged-time-stock",
                                     children=(
-                                        DashIconify(
-                                            icon="ion:logo-github",
-                                            width=30
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="ion:logo-github",
+                                                            width=20
+                                                        ),
+                                                        ' Heatmap'
+                                                    ]
+                                                )
+                                            ]
                                         )
                                     )
                                 )
@@ -141,11 +174,22 @@ app.layout = html.Div(
                         html.Div(
                             children=(
                                 html.A(
-                                href="#acknowledged-time-exchange",
+                                    href="#acknowledged-time-exchange",
                                     children=(
-                                        DashIconify(
-                                            icon="ion:logo-github",
-                                            width=30
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="ion:logo-github",
+                                                            width=20
+                                                        ),
+                                                        ' Heatmap'
+                                                    ]
+                                                )
+                                            ]
                                         )
                                     )
                                 )
@@ -155,11 +199,22 @@ app.layout = html.Div(
                         html.Div(
                             children=(
                                 html.A(
-                                href="#cancel-time",
+                                    href="#cancel-time",
                                     children=(
-                                        DashIconify(
-                                            icon="ion:logo-github",
-                                            width=30
+                                        html.Div(
+                                            className="sidemenu-link-container",
+                                            children=[
+                                                html.P(
+                                                    className='sidemenu-link',
+                                                    children=[
+                                                            DashIconify(
+                                                            icon="ion:logo-github",
+                                                            width=20
+                                                        ),
+                                                        ' Heatmap'
+                                                    ]
+                                                )
+                                            ]
                                         )
                                     )
                                 )
