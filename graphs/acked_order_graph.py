@@ -12,7 +12,7 @@ def get_acked_figure(df, stock_value):
         x=[dff['TimeStamp_x'].iloc[0]],
         y=[dff['XYDuration'].iloc[0]],
         mode='markers',
-        marker=dict(color=[dff['XYDuration'].iloc[0]], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
+        marker=dict(color='rgb(255,255,255)', size=10),
     ))
     fig.update_layout(template="plotly_dark",
                     title=f'Order Acknowledgement Delay for {stock_value}', 
@@ -25,22 +25,12 @@ def get_acked_figure(df, stock_value):
             y=dff['XYDuration'][:i + 1],
             mode='markers',
             marker=dict(color=dff['XYDuration'][:i + 1], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10)),
-            # layout=dict(
-            #     # xaxis=dict(range=[min(dff['TimeStamp_x']), max(dff['TimeStamp_x'])]),
-            #     # yaxis=dict(range=[min(dff['XYDuration']), max(dff['XYDuration'])])
-            #     xaxis=dict(
-            #         range=[
-            #             min(dff['TimeStamp_x']) - timedelta(seconds=20),
-            #             max(dff['TimeStamp_x']) + timedelta(seconds=20)
-            #         ]
-            #     ),
-            #     yaxis=dict(
-            #         range=[
-            #             min(dff['XYDuration']) - 10,
-            #             max(dff['XYDuration']) + 10
-            #         ]
-            #     )
-            # ),
+            layout=dict(
+                # xaxis=dict(range=[min(dff['TimeStamp_x']), max(dff['TimeStamp_x'])]),
+                # yaxis=dict(range=[min(dff['XYDuration']), max(dff['XYDuration'])])
+                xaxis=dict(range=[min(dff['TimeStamp_x'] - timedelta(seconds=20)), max(dff['TimeStamp_x']) + timedelta(seconds=20)]),
+                yaxis=dict(range=[min(dff['XYDuration'] - 100000), max(dff['XYDuration'] + 100000)])
+            ),
             name=str(i))
         for i in range(1, len(dff) + 1)
     ]
@@ -51,9 +41,9 @@ def get_acked_figure(df, stock_value):
         updatemenus=[dict(type='buttons', showactive=False,
                           buttons=[dict(label='Play',
                                         method='animate',
-                                        args=[None, dict(frame=dict(duration=500, redraw=True), fromcurrent=True)])])])
+                                        args=[None, dict(frame=dict(duration=50, redraw=False), fromcurrent=True)])])])
 
-    # fig.update_layout(xaxis=dict(range=[min(dff['TimeStamp_x'] - timedelta(seconds=20)), max(dff['TimeStamp_x'] + timedelta(seconds=20))]),
-    #               yaxis=dict(range=[min(dff['XYDuration']-100), max(dff['XYDuration']+100)]))
+    fig.update_layout(xaxis=dict(range=[min(dff['TimeStamp_x'] - timedelta(seconds=20)), max(dff['TimeStamp_x']) + timedelta(seconds=20)]),
+                yaxis=dict(range=[min(dff['XYDuration'] - 100000), max(dff['XYDuration'] + 100000)]))
 
     return fig
