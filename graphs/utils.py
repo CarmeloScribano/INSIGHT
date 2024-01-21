@@ -16,4 +16,3 @@ def get_duration_of_x_and_y(df, msg_x, msg_y):
 
 def get_df_rows_by_symbol(df, symbol):
     return df[df['Symbol'] == symbol]
-

@@ -1,11 +1,9 @@
-import plotly.express as px
-import plotly.graph_objects as go
 import pandas as pd
-from dash import Dash, html, dcc, Output, Input
+from dash import Dash, html, dcc, Output, Input, State
 from dash_iconify import DashIconify
 from graphs.ingestor import get_data_frame
 from graphs.treemap import get_graph_data, get_line_graph_data, get_default_line_graph
-
+from graphs.fill_rate import DEFAULT_THRESHOLD, get_heatmap_figure
 
 
 pd.options.mode.copy_on_write = True
@@ -13,7 +11,6 @@ pd.options.mode.copy_on_write = True
 df = get_data_frame("Exchange_1")
 
     
-
 app = Dash(__name__)
 
 app.layout = html.Div(
@@ -51,7 +48,7 @@ app.layout = html.Div(
                         html.Div(
                             children=(
                                 html.A(
-                                    href="#heatmap",
+                                    href="#cancel-time",
                                     children=(
                                         html.Div(
                                             className="sidemenu-link-container",
@@ -60,10 +57,10 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="mdi:hot",
+                                                            icon="material-symbols:cancel",
                                                             width=20
                                                         ),
-                                                        ' Heat Map'
+                                                        ' Cancel'
                                                     ]
                                                 )
                                             ]
@@ -126,7 +123,7 @@ app.layout = html.Div(
                         html.Div(
                             children=(
                                 html.A(
-                                    href="#cancel-time",
+                                    href="#heatmap",
                                     children=(
                                         html.Div(
                                             className="sidemenu-link-container",
@@ -135,10 +132,10 @@ app.layout = html.Div(
                                                     className='sidemenu-link',
                                                     children=[
                                                             DashIconify(
-                                                            icon="material-symbols:cancel",
+                                                            icon="mdi:hot",
                                                             width=20
                                                         ),
-                                                        ' Cancel'
+                                                        ' Heat Map'
                                                     ]
                                                 )
                                             ]
@@ -146,7 +143,7 @@ app.layout = html.Div(
                                     )
                                 )
                             )
-                        ),
+                        )
                     ]
                 )                
             )
@@ -161,12 +158,17 @@ app.layout = html.Div(
                         html.Div(
                             id="treemap",
                             children=[
+                                html.H1(
+                                    className="text-center",
+                                    children='Tree Map', 
+                                ),
+
                                 html.Div(
                                     children=(
                                         dcc.Graph(
                                             id='symbol-treemap',
                                             style={
-                                                "height": "48vh",
+                                                "height": "43vh",
                                             },
                                             figure=get_graph_data()
                                         )
@@ -178,7 +180,7 @@ app.layout = html.Div(
                                         dcc.Graph(
                                             id='line-graph',
                                             style={
-                                                "height": "48vh",
+                                                "height": "43vh",
                                             }
                                         )
                                     )
@@ -187,49 +189,84 @@ app.layout = html.Div(
                         ),
                         
                         html.Div(
-                            id='heatmap',
-                            children=(
+                            id='cancel-time',
+                            children=[
+                                html.H1(
+                                    className="text-center",
+                                    children='Cancel Time', 
+                                ),
                                 dcc.Graph(
                                     style={
-                                        "height": "98vh",
+                                        "height": "88vh",
                                     },
                                     figure=get_graph_data()
                                 )
-                            )
+                            ]
                         ),
                         
                         html.Div(
                             id='acknowledged-time-stock',
-                            children=(
+                            children=[
+                                html.H1(
+                                    className="text-center",
+                                    children='Ackowledged Time Stock', 
+                                ),
                                 dcc.Graph(
                                     style={
-                                        "height": "98vh",
+                                        "height": "88vh",
                                     },
                                     figure=get_graph_data()
                                 )
-                            )
+                            ]
                         ),
                         
                         html.Div(
                             id='acknowledged-time-exchange',
-                            children=(
+                            children=[
+                                html.H1(
+                                    className="text-center",
+                                    children='Ackowledged Time Exchange', 
+                                ),
                                 dcc.Graph(
                                     style={
-                                        "height": "98vh",
+                                        "height": "88vh",
                                     },
                                     figure=get_graph_data()
                                 )
-                            )
+                            ]
                         ),
                         
                         html.Div(
-                            id='cancel-time',
+                            id='heatmap',
                             children=(
-                                dcc.Graph(
-                                    style={
-                                        "height": "98vh",
-                                    },
-                                    figure=get_graph_data()
+                                html.Div(
+                                    className="text-center",
+                                    style={'height':'98vh'},
+                                    children=[
+                                        html.H1(
+                                            className="text-center",
+                                            children='Heatmap Test', 
+                                        ),
+                                        dcc.Graph(
+                                            id='fill-rate-heatmap', 
+                                            style={'height':'75vh'}, 
+                                            figure=get_heatmap_figure(DEFAULT_THRESHOLD)
+                                        ),
+                                        dcc.Input(
+                                            id='input-fill-threshold', 
+                                            type='number', 
+                                            placeholder='30μs'
+                                        ),
+                                        html.Button(
+                                            id='submit-fill-threshold',
+                                            n_clicks=0, 
+                                            children='Update'
+                                        ),
+                                        html.P(
+                                            id="current-threshold", 
+                                            children=f'Current Threshold: {DEFAULT_THRESHOLD} microseconds'
+                                        )
+                                    ]
                                 )
                             )
                         )
@@ -265,7 +302,7 @@ app.layout = html.Div(
 )
 
 
-# Treemap click behaviour
+# Callback for Treemap graph
 @app.callback(
     Output('line-graph', 'figure'),
     [Input('symbol-treemap', 'clickData')]
@@ -279,6 +316,25 @@ def update_line_graph(click_data):
     return get_default_line_graph()
 
 
+# Callbacks for Fill Rate graph
+@app.callback(
+    Output('fill-rate-heatmap', 'figure'),
+    Input('submit-fill-threshold', 'n_clicks'),
+    State('input-fill-threshold', 'value')
+)
+def update_heatmap(n_clicks, threshold):
+    return get_heatmap_figure(threshold)
+
+@app.callback(
+    Output('current-threshold', 'children'),
+    Input('submit-fill-threshold', 'n_clicks'),
+    State('input-fill-threshold', 'value')
+)
+def update_current_threshold(n_clicks, threshold):
+    return f"Current Threshold: {threshold or DEFAULT_THRESHOLD} microseconds"
+
+
+# Callback for the exchange dropdownlist
 @app.callback(
     Output('exchange', 'children'),
     Input('exchange-dropdown', 'value')
