@@ -15,14 +15,15 @@ def get_acked_trades():
 
 def get_volume_df():
     symbol_counts = get_acked_trades()['Symbol'].value_counts()
-
     treemap_data = pd.DataFrame({'Symbol': symbol_counts.index, 'Count': symbol_counts.values})
+    treemap_data['label'] = treemap_data['Symbol']
     return treemap_data
+
 
 def get_graph_data(): 
     treemap_data = get_volume_df()
     fig = px.treemap(treemap_data, template="plotly_dark", path=['Symbol'], values='Count', title='Symbol Frequency Treemap')
-    fig.update_traces(hovertemplate='<b>Stock:</b> %{label}<br><b>Volume Traded:</b> %{value}')
+    fig.update_traces(hovertemplate='<b>Stock:</b> %{customdata}<br><b>Volume Traded:</b> %{value}')
     return fig
 
 def get_line_graph_data(selected_symbol, max_points=100):
