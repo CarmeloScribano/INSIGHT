@@ -8,13 +8,25 @@ from graphs.ingestor import get_data_frame
 from graphs.treemap import get_graph_data, get_line_graph_data, get_default_line_graph
 from graphs.fill_rate import DEFAULT_THRESHOLD, get_heatmap_figure
 from graphs.acked_order_graph import get_acked_figure
-
+from graphs.cancelled_order_graph import get_cancelled_graph
 
 pd.options.mode.copy_on_write = True
 
-df = get_data_frame("Exchange_1")
+DFS = {
+    'Exchange 1' : get_data_frame("Exchange_1"),
+    'Exchange 2' : get_data_frame("Exchange_2"),
+    'Exchange 3' : get_data_frame("Exchange_3")
+}
 
-    
+current_exchange = "Exchange 1"
+
+def get_df():
+    return DFS[current_exchange]
+
+def set_exchange(exchange):
+    global current_exchange
+    current_exchange = exchange
+
 app = Dash(__name__)
 
 app.layout = html.Div(
@@ -173,8 +185,7 @@ app.layout = html.Div(
                                             id='symbol-treemap',
                                             style={
                                                 "height": "43vh",
-                                            },
-                                            figure=get_graph_data(df)
+                                            }
                                         )
                                     )
                                 ),
@@ -260,7 +271,7 @@ app.layout = html.Div(
                                     style={
                                         "height": "88vh",
                                     },
-                                    figure=get_graph_data(df)
+                                    figure=get_graph_data(get_df())
                                 )
                             ]
                         ),
@@ -279,7 +290,7 @@ app.layout = html.Div(
                                         dcc.Graph(
                                             id='fill-rate-heatmap', 
                                             style={'height':'75vh'}, 
-                                            figure=get_heatmap_figure(df, DEFAULT_THRESHOLD)
+                                            figure=get_heatmap_figure(get_df(), DEFAULT_THRESHOLD)
                                         ),
                                         dcc.Input(
                                             id='input-fill-threshold', 
@@ -333,13 +344,20 @@ app.layout = html.Div(
 
 # Callback for Treemap graph
 @app.callback(
+    Output('symbol-treemap', 'figure'),
+    [Input('exchange', 'children')]
+)
+def update_treemap_figure(children):
+    return get_graph_data(get_df())
+
+@app.callback(
     Output('line-graph', 'figure'),
     [Input('symbol-treemap', 'clickData')]
 )
 def update_line_graph(click_data):
     if click_data is not None:
         selected_symbol = click_data['points'][0]['label']
-        line_fig = get_line_graph_data(df, selected_symbol)
+        line_fig = get_line_graph_data(get_df(), selected_symbol)
         return line_fig
 
     return get_default_line_graph()
@@ -349,65 +367,32 @@ def update_line_graph(click_data):
 @app.callback(
         Output('bubble-stock-id-acked', 'figure'),
         Input('submit-stock-state-acked', 'n_clicks'),
+        Input('exchange', 'children'),
         State('input-stock-state-acked', 'value'))
-def update_output(n_clicks, stock_value):
-    return get_acked_figure(df, stock_value)
+def update_acked_output(n_clicks, chidlren, stock_value):
+    return get_acked_figure(get_df(), stock_value)
 
 
 # Callbacks for Cancelled graph
 @app.callback(
         Output('bubble-stock-id', 'figure'),
         Input('submit-stock-state', 'n_clicks'),
+        Input('exchange', 'children'),
         State('input-stock-state-canceled', 'value'))
-def update_output(n_clicks, stock_value):
-    dff = get_df_rows_by_symbol(df, stock_value)
-
-    # To be done
-    cancel_var = "CancelAcknowledged"
-    if "tbd" == "Exchange_2":
-        cancel_var = "Cancelled"
-
-    dff = get_duration_of_x_and_y(dff, "CancelRequest", cancel_var)
-
-    fig = go.Figure(data=go.Scatter(
-        x=dff['TimeStamp_x'],
-        y=dff['XYDuration'],
-        mode='markers',
-        marker=dict(color=dff['XYDuration'], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
-    ))
-    fig.update_layout(template="plotly_dark")
-
-    frames = [
-        go.Frame(data=go.Scatter(
-            x=dff['TimeStamp_x'][:i + 1],
-            y=dff['XYDuration'][:i + 1],
-            mode='markers',
-            marker=dict(color=dff['XYDuration'][:i + 1], colorscale=[[0, 'rgb(255,255,255)'], [1, 'rgb(255,0,0)']], size=10),
-            name='Trade Count'),
-            name=str(i))
-        for i in range(1, len(dff) + 1)
-    ]
-
-    fig.frames = frames
-
-    fig.update_layout(
-        updatemenus=[dict(type='buttons', showactive=False,
-                          buttons=[dict(label='Play',
-                                        method='animate',
-                                        args=[None, dict(frame=dict(duration=150, redraw=True), fromcurrent=True)])])])
-
-
-    return fig
+def update_output_cancelled(n_clicks, children, stock_value):
+    global current_exchange
+    return get_cancelled_graph(get_df(), current_exchange, stock_value)
 
 
 # Callbacks for Fill Rate graph
 @app.callback(
     Output('fill-rate-heatmap', 'figure'),
     Input('submit-fill-threshold', 'n_clicks'),
+    Input('exchange', 'children'),
     State('input-fill-threshold', 'value')
 )
-def update_heatmap(n_clicks, threshold):
-    return get_heatmap_figure(df, threshold)
+def update_heatmap(n_clicks, children, threshold):
+    return get_heatmap_figure(get_df(), threshold)
 
 @app.callback(
     Output('current-threshold', 'children'),
@@ -424,6 +409,8 @@ def update_current_threshold(n_clicks, threshold):
     Input('exchange-dropdown', 'value')
 )
 def update_output(value):
+    # print(value)
+    set_exchange(value)
     return f'You have selected {value}'
 
 

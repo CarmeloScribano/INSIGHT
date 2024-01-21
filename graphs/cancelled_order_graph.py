@@ -1,31 +1,12 @@
-from ingestor import get_data_frame
-from utils import get_duration_of_x_and_y, get_df_rows_by_symbol
-from dash import Dash, html, dcc, callback, Output, Input, State
+from .utils import get_duration_of_x_and_y, get_df_rows_by_symbol
 import plotly.graph_objects as go
-import pandas as pd
 
-exchange = "Exchange_2"
-df = get_data_frame(exchange)
-
-is_anim_playing = False
-
-app = Dash(__name__)
-
-app.layout = html.Div([
-    html.Div("Cancel orders within a Scatter plot"),
-    dcc.Input(id='input-stock-state-canceled', type='text', value=''),
-    html.Button(id='submit-stock-state', n_clicks=0, children='Submit'),
-    dcc.Graph(id='bubble-stock-id')])
-
-@app.callback(
-        Output('bubble-stock-id', 'figure'),
-        Input('submit-stock-state', 'n_clicks'),
-        State('input-stock-state-canceled', 'value'))
-def update_output(n_clicks, stock_value):
+def get_cancelled_graph(df, exchange, stock_value):
     dff = get_df_rows_by_symbol(df, stock_value)
 
+    # To be done
     cancel_var = "CancelAcknowledged"
-    if exchange == "Exchange_2":
+    if exchange == "Exchange 2":
         cancel_var = "Cancelled"
 
     dff = get_duration_of_x_and_y(dff, "CancelRequest", cancel_var)
@@ -57,8 +38,7 @@ def update_output(n_clicks, stock_value):
                                         method='animate',
                                         args=[None, dict(frame=dict(duration=150, redraw=True), fromcurrent=True)])])])
 
-
     return fig
 
-if __name__ == '__main__':
-    app.run(debug=True, port=8050)
+# if __name__ == '__main__':
+#     app.run(debug=True, port=8050)
