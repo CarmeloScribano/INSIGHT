@@ -1,16 +1,17 @@
 import pandas as pd
 import plotly.graph_objects as go
+
 from .utils import get_duration_of_x_and_y
 
 DEFAULT_THRESHOLD = 60
 
 def merge_raw_with_duration(raw_df, df):
-    return pd.merge(raw_df, df, on="OrderID", how="outer")
+    return pd.merge(raw_df, df, on='OrderID', how='outer')
 
 def get_heatmap_figure(raw_df, threshold):
     threshold = threshold or DEFAULT_THRESHOLD
 
-    df = get_duration_of_x_and_y(raw_df, "NewOrderRequest", "NewOrderAcknowledged")
+    df = get_duration_of_x_and_y(raw_df, 'NewOrderRequest', 'NewOrderAcknowledged')
 
     mdf = merge_raw_with_duration(raw_df, df)
 
@@ -28,13 +29,12 @@ def get_heatmap_figure(raw_df, threshold):
         y=aggregated_df['Symbol'],
         zmin=0,
         zmax=100,
-        # colorscale='Viridis'
         colorscale=[[0, 'rgb(255,0,0)'], [1, 'rgb(0,255,0)']]
     ))
 
     fig.update_layout(title='Heatmap Aggregated by 5 Seconds',
                     xaxis_title='Timestamp',
                     yaxis_title='Symbol',
-                    template="plotly_dark")
+                    template='plotly_dark')
 
     return fig
