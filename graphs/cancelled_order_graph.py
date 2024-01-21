@@ -12,19 +12,23 @@ is_anim_playing = False
 app = Dash(__name__)
 
 app.layout = html.Div([
-    html.Div("Acknowldedge orders within a Scatter plot"),
-    dcc.Input(id='input-stock-state-acked', type='text', value=''),
-    html.Button(id='submit-stock-state-acked', n_clicks=0, children='Submit'),
-    dcc.Graph(id='bubble-stock-id-acked')])
+    html.Div("Cancel orders within a Scatter plot"),
+    dcc.Input(id='input-stock-state-canceled', type='text', value=''),
+    html.Button(id='submit-stock-state', n_clicks=0, children='Submit'),
+    dcc.Graph(id='bubble-stock-id')])
 
 @app.callback(
-        Output('bubble-stock-id-acked', 'figure'),
-        Input('submit-stock-state-acked', 'n_clicks'),
-        State('input-stock-state-acked', 'value'))
+        Output('bubble-stock-id', 'figure'),
+        Input('submit-stock-state', 'n_clicks'),
+        State('input-stock-state-canceled', 'value'))
 def update_output(n_clicks, stock_value):
     dff = get_df_rows_by_symbol(df, stock_value)
 
-    dff = get_duration_of_x_and_y(dff, "NewOrderRequest", "NewOrderAcknowledged")
+    cancel_var = "CancelAcknowledged"
+    if exchange == "Exchange_2":
+        cancel_var = "Cancelled"
+
+    dff = get_duration_of_x_and_y(dff, "CancelRequest", cancel_var)
 
     fig = go.Figure(data=go.Scatter(
         x=dff['TimeStamp_x'],
