@@ -3,8 +3,15 @@ A security volume and liquidity analyzer that helps market makers gain **in$ight
 
 This project was built in 24 hours for the ConUHacks VIII National Bank Capital Markets challenge.
 
-## Installation guid
+# Installation guide
 
+### TL;DR
+Paste this one liner in your terminal
+
+`git clone https://github.com/CarmeloScribano/INSIGHT.git && cd INSIGHT && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt && python3 app.py`
+<hr/>
+
+### Details
 1. Clone the project and `cd` into the folder
 
 `git clone https://github.com/CarmeloScribano/INSIGHT.git && cd INSIGHT`
