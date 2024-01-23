@@ -1,5 +1,7 @@
 # IN$IGHT
-Submission for the ConUHacks VIII for Team Rats.
+A security volume and liquidity analyzer that helps market makers gain **in$ights** into trends, patterns and anomalies to make data-driven decisions.
+
+This project was built in 24 hours for the ConUHacks VIII National Bank Capital Markets challenge.
 
 ## Installation guid
 
