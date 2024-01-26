@@ -3,6 +3,7 @@ A security volume analyzer that helps market makers gain **in$ights** into trend
 
 This project was built in 24 hours for the ConUHacks VIII National Bank Capital Markets challenge.
 
+Devpost link: https://devpost.com/software/in-ight
 # Installation guide
 
 ### TL;DR
