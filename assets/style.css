@@ -121,8 +121,8 @@ html > * {
 /* Input styling */
 .Select-control, .is-open {
     width: 12vw;
-    height: 40px;
-    font-size: 24px;
+    height: 32px;
+    font-size: 16px;
     text-align: left;
     font-weight: 400;
     background-color: var(--secondary);
@@ -131,12 +131,11 @@ html > * {
 }
 
 .Select-placeholder, .Select-value, .Select-multi-value-wrapper {
-    top: 5px;
     color: var(--grey);
 }
 
 .Select-value-label {
-    top: 5px;
+    position: relative;
     color: var(--grey) !important;
     font-weight: 400;
 }

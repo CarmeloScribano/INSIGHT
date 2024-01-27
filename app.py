@@ -98,7 +98,7 @@ app.layout = html.Div(
                                                 html.Div(
                                                     className='horizontal-align',
                                                     children=[
-                                                        DashIconify(icon='material-symbols-light:search', className='grey', width=40),
+                                                        DashIconify(icon='material-symbols-light:search', className='grey', width=30),
                                                         dcc.Dropdown(
                                                             id='input',
                                                             options=['QBG5', 'TTTT', 'FGHR'],
@@ -130,7 +130,7 @@ app.layout = html.Div(
         
         html.Hr(
             style={
-                'width': '75vw'
+                'width': '50vw'
             }
         ),
 
