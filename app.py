@@ -311,6 +311,7 @@ def update_line_graph(click_data):
 
 #     return get_default_line_graph()
 
+
 # # Callbacks for Fill Rate graph
 # @app.callback(
 #     Output('fill-rate-heatmap', 'figure'),
