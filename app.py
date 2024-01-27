@@ -80,7 +80,17 @@ app.layout = html.Div(
                     ]
                 ),
 
-                html.Div(className='treemap', children=(dcc.Graph(id='symbol-treemap'))),
+                html.Div(
+                    className='graph',
+                    children=(
+                        dcc.Graph(id='symbol-treemap', style={
+                            'height': '30vh',
+                            'width': '68vw',
+                            'margin': '0.5vw 0.5vw 0.5vh 0.5vw',
+                            'border-radius': '20px'
+                        })
+                    )
+                )
             ]
         ),
         
@@ -173,6 +183,7 @@ def update_line_graph(click_data):
 )
 def update_output(value):
     set_exchange(value)
+    return 'Current Exchange'
 
 
 if __name__ == '__main__':

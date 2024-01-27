@@ -1,7 +1,7 @@
 /* Variables */
 :root {
     --graph-padding: 1vh;
-    --border-radius: 20px;
+    --border-radius: 5px;
     --primary: #1c1c1c;
     --secondary: #111111;
     --accent: #5A4D82;
@@ -51,6 +51,10 @@ a {
     display: flex;
 }
 
+.graph > div > div > div > div > .main-svg {
+    border-radius: var(--border-radius);
+}
+
 
 /* Top Organization */
 html > * {
@@ -59,34 +63,36 @@ html > * {
 
 .general-statistics{
     width: 30vw;
-    padding: 1vh 1vw;
+    height: 30vh;
+    padding: 1vh 0.5vw;
 }
 
 .statistic-container {
-    width: 13vw;
-    height: 10vh;
-    padding: 1vh 1vw;
+    width: 15.75vw;
+    height: 14.5vh;
+    border-radius: var(--border-radius);
 }
 
 .time-statistic {
+    margin: 0 0.25vw 0.5vh 0;
     background-color: #c9c1e2;
 }
 
 .exchanges-statistic {
+    margin: 0 0 0.5vh 0.25vw;
     background-color: #05ec69;
 }
 
 .exchange-statistic {
+    margin: 0.5vh 0.25vw 0 0;
     background-color: #6A4382;
 }
 
 .search-statistic {
+    margin: 0.5vh 0 0 0.25vw;
     background-color: #ef0466;
 }
 
-.treemap {
-    height: 28vh;
-    width: 68vw;
-    padding: 1vh 1vw;
-    border-radius: var(--border-radius);
+.js-plotly-plot {
+    border-radius: var(--border-radius) !important;
 }
