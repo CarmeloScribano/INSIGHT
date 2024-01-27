@@ -65,7 +65,7 @@ a {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 
@@ -225,6 +225,46 @@ html > * {
 .delay-text {
     margin: 0;
     font-size: 80px;
+}
+
+
+/* Delay graph styling */
+.anomaly-container-delay {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    width: 29vw;
+    height: 14vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vh 0 0 1vw;
+}
+
+.lowest-delay-container-delay {
+    background-color: #B4260F;
+    border-radius: var(--border-radius);
+    width: 14vw;
+    height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1vh 1vw 1vh 1vw;
+}
+
+.highest-delay-container-delay {
+    background-color: #00664B;
+    border-radius: var(--border-radius);
+    width: 14vw;
+    height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1vh 0 1vh 0;
+}
+
+.delay-icon {
+    fill: linear-gradient(to bottom left, #B4260F, #FF4848);
+    margin-bottom: 3vh;
 }
 
 

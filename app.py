@@ -136,9 +136,9 @@ app.layout = html.Div(
             }
         ),
 
-        # Main Graph
+        # Main Graph - Trade Volume
         html.Div(
-            className='main-container',
+            className='main-container hidden',
             children=(
                 html.Div(
                     className='main-container-toggle',
@@ -211,6 +211,91 @@ app.layout = html.Div(
             )
         ),
     
+        # Main Graph - Acknowledged Delay
+        html.Div(
+            className='main-container',
+            children=(
+                html.Div(
+                    className='main-container-toggle',
+                    children=(
+                        DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60),
+                    )
+                ),
+
+                html.Div(
+                    className='horizontal-align',
+                    children=[
+                        html.Div(
+                            className='graph',
+                            children=(
+                                dcc.Graph(
+                                    id='bubble-stock-id-acked',
+                                    style={
+                                        'height': '60vh',
+                                        'width': '60vw',
+                                        'margin': '2vh 0 1vh 0'
+                                    }
+                                ) 
+                            )
+                        ),
+                        html.Div(
+                            children=[
+                                html.Div(
+                                    className='anomaly-container-delay text-center',
+                                    children=(
+                                        html.Div(
+                                            children=[
+                                                html.P(className='main-statistic-title', children='Anomaly Detected'),
+                                                html.P(className='anomaly-text', children='09:30:23')
+                                            ]
+                                        )
+                                    )
+                                ),
+                                html.Div(
+                                    className='horizontal-align',
+                                    children=[
+                                        html.Div(
+                                            className='lowest-delay-container-delay text-center',
+                                            children=(
+                                                html.Div(
+                                                    children=[
+                                                        DashIconify(icon='ph:minus-fill', className='delay-icon', color='#00664B', width=100),
+                                                        html.P(className='main-statistic-title', children='Lowest Delay'),
+                                                        html.P(className='delay-text', children='0.1')
+                                                    ]
+                                                )
+                                            )
+                                        ),
+                                        html.Div(
+                                            className='highest-delay-container-delay text-center',
+                                            children=(
+                                                html.Div(
+                                                    children=[
+                                                        DashIconify(icon='ph:plus-fill', className='delay-icon', color='#B4260F', width=100),
+                                                        html.P(className='main-statistic-title', children='Highest Delay'),
+                                                        html.P(className='delay-text', children='3.4')
+                                                    ]
+                                                )
+                                            )
+                                        )
+                                    ]
+                                )
+                            ]
+                        ),
+                        
+                    ]
+                ),
+                
+                html.Div(
+                    className='main-container-toggle',
+                    children=(
+                        DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60),
+                    )
+                )
+            )
+        ),
+    
+
         # Chart Links
         html.Div(
             className='',
@@ -283,19 +368,19 @@ def update_line_graph(click_data):
     return get_default_line_graph()
 
 
-# # Callback for Acked graph
-# @app.callback(
-#     Output('bubble-stock-id-acked', 'figure'),
-#     Input('symbol-treemap', 'clickData'),
-#     Input('exchange', 'children'),
-# )
-# def update_acked_output(click_data, children):
-#     if click_data is not None:
-#         selected_symbol = click_data['points'][0]['label']
-#         line_fig = get_acked_figure(get_df(), selected_symbol)
-#         return line_fig
+# Callback for Acked graph
+@app.callback(
+    Output('bubble-stock-id-acked', 'figure'),
+    Input('symbol-treemap', 'clickData'),
+    Input('exchange-dropdown', 'value'),
+)
+def update_acked_output(click_data, children):
+    if click_data is not None:
+        selected_symbol = click_data['points'][0]['label']
+        line_fig = get_acked_figure(get_df(), selected_symbol)
+        return line_fig
 
-#     return get_default_line_graph()
+    return get_default_line_graph()
 
 
 # # Callback for Stock ID graph
