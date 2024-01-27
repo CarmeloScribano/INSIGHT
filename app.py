@@ -47,8 +47,9 @@ app.layout = html.Div(
                                         html.Div(
                                             className='text-center',
                                             children=[
-                                                html.P(id='time-title', children='Total Time'),
-                                                html.P(id='time', children='56m')
+                                                DashIconify(icon='dashicons:clock', width=40),
+                                                html.P(id='time-title', className='statistic-title', children='Total Time'),
+                                                html.P(id='time', className='statistic-text', children='56m')
                                             ]
                                         )
                                     ]
@@ -60,8 +61,9 @@ app.layout = html.Div(
                                         html.Div(
                                             className='text-center',
                                             children=[
-                                                html.P(id='exchanges-title', children='Total Exchanges'),
-                                                html.P(id='exchanges', children='5,435')
+                                                DashIconify(icon='mdi:graph-line', width=40),
+                                                html.P(id='exchanges-title', className='statistic-title', children='Total Exchanges'),
+                                                html.P(id='exchanges', className='statistic-text', children='5,435')
                                             ]
                                         )
                                     ]
@@ -77,8 +79,12 @@ app.layout = html.Div(
                                         html.Div(
                                             className='text-center',
                                             children=[
-                                                html.P(id='exchange-title', children='Current Exchange'),
-                                                dcc.Dropdown(['Exchange 1', 'Exchange 2', 'Exchange 3'], 'Exchange 1', id='exchange-dropdown')
+                                                html.P(id='exchange-title', className='statistic-title', children='Current Exchange'),
+                                                dcc.Dropdown(
+                                                    id='exchange-dropdown',
+                                                    options=['Exchange 1', 'Exchange 2', 'Exchange 3'], 
+                                                    value='Exchange 1'
+                                                )
                                             ]
                                         )
                                     ]
@@ -88,9 +94,18 @@ app.layout = html.Div(
                                     className='statistic-container search-statistic',
                                     children=[
                                         html.Div(
-                                            className='text-center',
                                             children=[
-                                                html.P(id='search', children='Search')
+                                                html.Div(
+                                                    className='horizontal-align',
+                                                    children=[
+                                                        DashIconify(icon='material-symbols-light:search', className='grey', width=40),
+                                                        dcc.Dropdown(
+                                                            id='input',
+                                                            options=['QBG5', 'TTTT', 'FGHR'],
+                                                            placeholder='Search Option',
+                                                        )
+                                                    ]
+                                                )
                                             ]
                                         )
                                     ]
