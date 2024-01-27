@@ -64,6 +64,10 @@ a {
     border-radius: var(--border-radius);
 }
 
+.hidden {
+    display: none;
+}
+
 
 /* Top Organization */
 html > * {
@@ -210,7 +214,7 @@ html > * {
     -webkit-text-fill-color: transparent; 
     -moz-text-fill-color: transparent;
     margin: 0;
-    font-size: 96px;
+    font-size: 80px;
 }
 
 .main-statistic-title {
@@ -220,7 +224,34 @@ html > * {
 
 .delay-text {
     margin: 0;
-    font-size: 96px;
+    font-size: 80px;
+}
+
+
+/* Chart menu styling */
+.chart-menu-button {
+    color: var(--white);
+    background-color: var(--primary);
+    border: none;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    margin: 2vh 7vw 0 7vw;
+}
+
+.active-chart {
+    background-image: linear-gradient(to bottom left, #85D829, #C6CAFD);
+    background-size: 100%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+}
+
+.selected-item {
+    width: 0.5vw;
+    height: 0.5vw;
+    background-image: linear-gradient(to bottom left, #85D829, #C6CAFD);
+    border-radius: 100px;
+    margin: 0.5vh auto 0 auto;
 }
 
 

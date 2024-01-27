@@ -32,6 +32,7 @@ app.title = 'IN$IGHT'
 
 app.layout = html.Div(
     children=[
+        # Top Statistics & Treemap
         html.Div(
             className='horizontal-align', 
             children=[
@@ -128,12 +129,14 @@ app.layout = html.Div(
             ]
         ),
         
+        # Divider Bar
         html.Hr(
             style={
                 'width': '50vw'
             }
         ),
 
+        # Main Graph
         html.Div(
             className='main-container',
             children=(
@@ -206,6 +209,54 @@ app.layout = html.Div(
                     )
                 )
             )
+        ),
+    
+        # Chart Links
+        html.Div(
+            className='',
+            children=[
+                html.Div(
+                    className='text-center',
+                    children=[
+                        html.Button(
+                            className='chart-menu-button active-chart',
+                            children=[
+                                'Trade Volume',
+                                html.Div(
+                                    className='selected-item'
+                                )
+                            ]
+                        ),
+                        html.Button(
+                            className='chart-menu-button',
+                            children=[
+                                'Acknowledged Delay',
+                                html.Div(
+                                    className='selected-item hidden'
+                                )
+                            ]
+                        ),
+                        html.Button(
+                            className='chart-menu-button',
+                            children=[
+                                'Fill Rate',
+                                html.Div(
+                                    className='selected-item hidden'
+                                )
+                            ]
+                        ),
+                        html.Button(
+                            className='chart-menu-button',
+                            children=[
+                                'Cancelled Delay',
+                                html.Div(
+                                    className='selected-item hidden'
+                                )
+                            ]
+                        )
+                    ]
+                )
+            ]
         )
     ]
 )
