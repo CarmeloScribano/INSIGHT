@@ -1,6 +1,7 @@
 /* Variables */
 :root {
     --graph-padding: 1vh;
+    --border-radius: 20px;
     --primary: #1c1c1c;
     --secondary: #111111;
     --accent: #5A4D82;
@@ -42,115 +43,50 @@ a {
     display: none;
 }
 
-.dash-input {
-    margin-top: 5vh;
-}
-
-.current-threshold {
-    margin-top: 2vh;
-}
-
 .text-center {
     text-align: center;
 }
 
-
-/* General site layout */
-.sidemenu { 
-    border-radius: 10px;
-    margin: 1vh 0.5vw;
-    height: 98vh;
-    width: 10vw;
-    text-align: center;
-    position: fixed;
-    left: 0;
+.horizontal-align {
     display: flex;
-    align-items: center;
-    background-color: var(--secondary);
-    border-radius: 10px;
-    box-shadow: rgba(90, 77, 130, 0.3) 0px 5px 10px;
-}
-
-.main {
-    width: 73vw;
-    float: right;
-    margin-right: 16vw;
-}
-
-.static-data {
-    border-radius: 10px;
-    margin: 1vh 0.5vw;
-    height: 98vh;
-    width: 15vw;
-    position: fixed;
-    right: 0;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    background-color: var(--secondary);
-    border-radius: 10px;
-    box-shadow: rgba(90, 77, 130, 0.3) 0px 5px 10px;
 }
 
 
-/* Side menu styling */
-.sidemenu > div {
-    width: 3vw;
-}
-
-.sidemenu > div > div {
-    margin: 10vh 0px 10vh 0px;
-    color: var(--white);
-}
-
-.sidemenu-link-container {
-    width: 10vw;
-    text-align: center;
-}
-
-.sidemenu-link-container :hover {
-    color: var(--accent) !important;
-}
-
-.sidemenu-link {
-    margin-top: 0px;
-}
-
-
-/* Main graph container organization */
+/* Top Organization */
 html > * {
     border-style: none !important;
 }
 
-.main-container {
-    background-color: var(--primary);
+.general-statistics{
+    width: 30vw;
+    padding: 1vh 1vw;
 }
 
-.main-container > div {
-    padding: var(--graph-padding);
+.statistic-container {
+    width: 13vw;
+    height: 10vh;
+    padding: 1vh 1vw;
 }
 
-#symbol-treemap {
-    padding-bottom: var(--graph-padding);
+.time-statistic {
+    background-color: #c9c1e2;
 }
 
-#line-graph {
-    padding-top: var(--graph-padding);
+.exchanges-statistic {
+    background-color: #05ec69;
 }
 
-.main-container > div > div > div > div > div > .main-svg,
-.main-container > div> div > div > div > div > div > .main-svg {
-    border-radius: 10px;
-    box-shadow: rgba(90, 77, 130, 0.3) 0px 5px 10px;
+.exchange-statistic {
+    background-color: #6A4382;
 }
 
-
-/* Static Data container organization */
-.static-data > div {
-    margin: 1vw;
+.search-statistic {
+    background-color: #ef0466;
 }
 
-.static-data-container > div > div > div > div > div > .main-svg {
-    border: 1.5px solid rgba(90, 77, 130, 0.1);
-    border-radius: 10px;
+.treemap {
+    height: 28vh;
+    width: 68vw;
+    padding: 1vh 1vw;
+    border-radius: var(--border-radius);
 }
