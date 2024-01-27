@@ -135,12 +135,75 @@ app.layout = html.Div(
         ),
 
         html.Div(
+            className='main-container',
             children=(
-                dcc.Graph(
-                    id='line-graph',
-                    style={
-                        'height': '43vh',
-                    }
+                html.Div(
+                    className='main-container-toggle',
+                    children=(
+                        DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60),
+                    )
+                ),
+
+                html.Div(
+                    children=[
+                        html.Div(
+                            className='horizontal-align',
+                            children=[
+                                html.Div(
+                                    className='anomaly-container text-center',
+                                    children=(
+                                        html.Div(
+                                            children=[
+                                                html.P(className='main-statistic-title', children='Anomaly Detected'),
+                                                html.P(className='anomaly-text', children='09:30:23')
+                                            ]
+                                        )
+                                    )
+                                ),
+                                html.Div(
+                                    className='lowest-delay-container text-center',
+                                    children=(
+                                        html.Div(
+                                            children=[
+                                                html.P(className='main-statistic-title', children='Lowest Delay'),
+                                                html.P(className='delay-text', children='0.1')
+                                            ]
+                                        )
+                                    )
+                                ),
+                                html.Div(
+                                    className='highest-delay-container text-center',
+                                    children=(
+                                        html.Div(
+                                            children=[
+                                                html.P(className='main-statistic-title', children='Highest Delay'),
+                                                html.P(className='delay-text', children='3.4')
+                                            ]
+                                        )
+                                    )
+                                )
+                            ]
+                        ),
+                        html.Div(
+                            className='main-graph',
+                            children=(
+                                dcc.Graph(
+                                    id='line-graph',
+                                    style={
+                                        'height': '45vh',
+                                        'width': '90vw'
+                                    }
+                                )
+                            )
+                        )
+                    ]
+                ),
+                
+                html.Div(
+                    className='main-container-toggle',
+                    children=(
+                        DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60),
+                    )
                 )
             )
         )

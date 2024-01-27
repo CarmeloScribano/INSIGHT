@@ -56,6 +56,10 @@ a {
     color: var(--grey);
 }
 
+.white {
+    color: var(--white);
+}
+
 .graph > div > div > div > div > .main-svg {
     border-radius: var(--border-radius);
 }
@@ -148,6 +152,76 @@ html > * {
     width: 12vw;
     padding: none;
     margin: none;
+}
+
+
+/* Main graph styling */
+.main-container {
+    height: 60vh;
+    width: 90vw;
+    margin-left: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container-toggle {
+    width: 5vw;
+}
+
+.anomaly-container {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    width: 44vw;
+    height: 14vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vh 0 1vh 0;
+}
+
+.highest-delay-container {
+    background-color: #00664B;
+    border-radius: var(--border-radius);
+    width: 22vw;
+    height: 14vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vh 0 1vh 0;
+}
+
+
+.lowest-delay-container {
+    background-color: #B4260F;
+    border-radius: var(--border-radius);
+    width: 22vw;
+    height: 14vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vh 1vw 1vh 1vw;
+}
+
+.anomaly-text {
+    background-image: linear-gradient(to bottom left, #B4260F, #FF4848);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+    margin: 0;
+    font-size: 96px;
+}
+
+.main-statistic-title {
+    margin: 0;
+    font-size: 24px;
+}
+
+.delay-text {
+    margin: 0;
+    font-size: 96px;
 }
 
 
