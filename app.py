@@ -44,16 +44,26 @@ app.layout = html.Div(
                                 html.Div(
                                     className='statistic-container time-statistic',
                                     children=[
-                                        html.P(id='time-title', children='Total Time'),
-                                        html.P(id='time', children='56m')
+                                        html.Div(
+                                            className='text-center',
+                                            children=[
+                                                html.P(id='time-title', children='Total Time'),
+                                                html.P(id='time', children='56m')
+                                            ]
+                                        )
                                     ]
                                 ),
 
                                 html.Div(
                                     className='statistic-container exchanges-statistic',
                                     children=[
-                                        html.P(id='exchanges-title', children='Total Exchanges'),
-                                        html.P(id='exchanges', children='5,435')
+                                        html.Div(
+                                            className='text-center',
+                                            children=[
+                                                html.P(id='exchanges-title', children='Total Exchanges'),
+                                                html.P(id='exchanges', children='5,435')
+                                            ]
+                                        )
                                     ]
                                 )
                             ]
@@ -64,15 +74,25 @@ app.layout = html.Div(
                                 html.Div(
                                     className='statistic-container exchange-statistic',
                                     children=[
-                                        html.P(id='exchange-title', children='Current Exchange'),
-                                        dcc.Dropdown(['Exchange 1', 'Exchange 2', 'Exchange 3'], 'Exchange 1', id='exchange-dropdown')
+                                        html.Div(
+                                            className='text-center',
+                                            children=[
+                                                html.P(id='exchange-title', children='Current Exchange'),
+                                                dcc.Dropdown(['Exchange 1', 'Exchange 2', 'Exchange 3'], 'Exchange 1', id='exchange-dropdown')
+                                            ]
+                                        )
                                     ]
                                 ),
 
                                 html.Div(
                                     className='statistic-container search-statistic',
                                     children=[
-                                        html.P(id='search', children='Search'),
+                                        html.Div(
+                                            className='text-center',
+                                            children=[
+                                                html.P(id='search', children='Search')
+                                            ]
+                                        )
                                     ]
                                 )
                             ]
@@ -86,14 +106,19 @@ app.layout = html.Div(
                         dcc.Graph(id='symbol-treemap', style={
                             'height': '30vh',
                             'width': '68vw',
-                            'margin': '0.5vw 0.5vw 0.5vh 0.5vw',
-                            'border-radius': '20px'
+                            'margin': '0.5vw 0.5vw 0.5vh 0.5vw'
                         })
                     )
                 )
             ]
         ),
         
+        html.Hr(
+            style={
+                'width': '75vw'
+            }
+        ),
+
         html.Div(
             children=(
                 dcc.Graph(
