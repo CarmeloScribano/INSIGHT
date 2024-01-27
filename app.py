@@ -129,12 +129,14 @@ app.layout = html.Div(
             ]
         ),
         
+
         # Divider Bar
         html.Hr(
             style={
                 'width': '50vw'
             }
         ),
+
 
         # Main Graph - Trade Volume
         html.Div(
@@ -211,9 +213,10 @@ app.layout = html.Div(
             )
         ),
     
+
         # Main Graph - Acknowledged Delay
         html.Div(
-            className='main-container',
+            className='main-container hidden',
             children=(
                 html.Div(
                     className='main-container-toggle',
@@ -236,6 +239,91 @@ app.layout = html.Div(
                                         'margin': '2vh 0 1vh 0'
                                     }
                                 ) 
+                            )
+                        ),
+                        html.Div(
+                            children=[
+                                html.Div(
+                                    className='anomaly-container-delay text-center',
+                                    children=(
+                                        html.Div(
+                                            children=[
+                                                html.P(className='main-statistic-title', children='Anomaly Detected'),
+                                                html.P(className='anomaly-text', children='09:30:23')
+                                            ]
+                                        )
+                                    )
+                                ),
+                                html.Div(
+                                    className='horizontal-align',
+                                    children=[
+                                        html.Div(
+                                            className='lowest-delay-container-delay text-center',
+                                            children=(
+                                                html.Div(
+                                                    children=[
+                                                        DashIconify(icon='ph:minus-fill', className='delay-icon', color='#00664B', width=100),
+                                                        html.P(className='main-statistic-title', children='Lowest Delay'),
+                                                        html.P(className='delay-text', children='0.1')
+                                                    ]
+                                                )
+                                            )
+                                        ),
+                                        html.Div(
+                                            className='highest-delay-container-delay text-center',
+                                            children=(
+                                                html.Div(
+                                                    children=[
+                                                        DashIconify(icon='ph:plus-fill', className='delay-icon', color='#B4260F', width=100),
+                                                        html.P(className='main-statistic-title', children='Highest Delay'),
+                                                        html.P(className='delay-text', children='3.4')
+                                                    ]
+                                                )
+                                            )
+                                        )
+                                    ]
+                                )
+                            ]
+                        ),
+                        
+                    ]
+                ),
+                
+                html.Div(
+                    className='main-container-toggle',
+                    children=(
+                        DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60),
+                    )
+                )
+            )
+        ),
+
+
+        # Main Graph - Cancelled Delay
+        html.Div(
+            className='main-container',
+            children=(
+                html.Div(
+                    className='main-container-toggle',
+                    children=(
+                        DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60),
+                    )
+                ),
+
+                html.Div(
+                    className='horizontal-align',
+                    children=[
+                        html.Div(
+                            className='graph',
+                            children=(
+                                dcc.Graph(
+                                    id='bubble-stock-id',
+                                    style={
+                                        'height': '60vh',
+                                        'width': '60vw',
+                                        'margin': '2vh 0 1vh 0'
+                                    }
+                                )
                             )
                         ),
                         html.Div(
@@ -383,18 +471,18 @@ def update_acked_output(click_data, children):
     return get_default_line_graph()
 
 
-# # Callback for Stock ID graph
-# @app.callback(
-#         Output('bubble-stock-id', 'figure'),
-#         Input('symbol-treemap', 'clickData'),
-#         Input('exchange', 'children'))
-# def update_output_cancelled(click_data, children):
-#     if click_data is not None:
-#         selected_symbol = click_data['points'][0]['label']
-#         line_fig = get_cancelled_graph(get_df(), current_exchange, selected_symbol)
-#         return line_fig
+# Callback for Stock ID graph
+@app.callback(
+        Output('bubble-stock-id', 'figure'),
+        Input('symbol-treemap', 'clickData'),
+        Input('exchange-dropdown', 'value'))
+def update_output_cancelled(click_data, children):
+    if click_data is not None:
+        selected_symbol = click_data['points'][0]['label']
+        line_fig = get_cancelled_graph(get_df(), current_exchange, selected_symbol)
+        return line_fig
 
-#     return get_default_line_graph()
+    return get_default_line_graph()
 
 
 # # Callbacks for Fill Rate graph
