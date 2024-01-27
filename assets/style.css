@@ -268,6 +268,71 @@ html > * {
 }
 
 
+/* Fill Rate graph styling */
+.anomaly-container-fill-rate {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    width: 29vw;
+    height: 19vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vh 0 1.5vh 1vw;
+}
+
+.select-threshold-container {
+    background-image: linear-gradient(to bottom left, #AB62FA, #0819EF);
+    border-radius: var(--border-radius);
+    width: 29vw;
+    height: 19vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 0 1vw;
+}
+
+.dash-input {
+    background-color: var(--secondary);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--white);
+    font-size: 40px;
+    text-align: center;
+    margin: 2vh 0;
+}
+
+.threshold-button {
+    background-color: var(--secondary);
+    padding: 5px 40px;
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 20px;
+    text-align: center;
+}
+
+.current-threshold-container {
+    background-color: var(--secondary);
+    border-radius: var(--border-radius);
+    width: 29vw;
+    height: 19vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5vh 0 0 1vw;
+}
+
+.threshold-text {
+    background-image: linear-gradient(to bottom left, #B4260F, #FF4848);
+    background-size: 100%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+    margin: 0;
+    font-size: 48px;
+}
+
+
 /* Chart menu styling */
 .chart-menu-button {
     color: var(--white);

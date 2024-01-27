@@ -299,9 +299,109 @@ app.layout = html.Div(
         ),
 
 
-        # Main Graph - Cancelled Delay
+        # Main Graph - Fill Rate
         html.Div(
             className='main-container',
+            children=(
+                html.Div(
+                    className='main-container-toggle',
+                    children=(
+                        DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60),
+                    )
+                ),
+
+                html.Div(
+                    className='horizontal-align',
+                    children=[
+                        html.Div(
+                            className='graph',
+                            children=(
+                                dcc.Graph(
+                                    id='fill-rate-heatmap', 
+                                    style={
+                                        'height': '60vh',
+                                        'width': '60vw',
+                                        'margin': '2vh 0 1vh 0'
+                                    },
+                                    figure=get_heatmap_figure(get_df(), DEFAULT_THRESHOLD)
+                                )
+                            )
+                        ),
+                        html.Div(
+                            children=[
+                                html.Div(
+                                    className='anomaly-container-fill-rate text-center',
+                                    children=(
+                                        html.Div(
+                                            children=[
+                                                html.P(className='main-statistic-title', children='Anomaly Detected'),
+                                                html.P(className='anomaly-text', children='09:30:23')
+                                            ]
+                                        )
+                                    )
+                                ),
+
+                                
+                                html.Div(
+                                    className='select-threshold-container text-center',
+                                    children=(
+                                        html.Div(
+                                            children=[
+                                                html.P(
+                                                    className='main-statistic-title',
+                                                    children='Select Threshold'
+                                                ),
+
+                                                dcc.Input(
+                                                    id='input-fill-threshold', 
+                                                    type='number', 
+                                                    placeholder='60'
+                                                ),
+
+                                                html.Br(),
+
+                                                html.Button(
+                                                    className='threshold-button',
+                                                    id='submit-fill-threshold',
+                                                    n_clicks=0, 
+                                                    children='Update'
+                                                )
+                                            ]
+                                        )
+                                    )
+                                ),
+
+                                
+                                html.Div(
+                                    className='current-threshold-container text-center',
+                                    children=(
+                                        html.Div(
+                                            children=[
+                                                html.P(className='main-statistic-title', children='Current Threshold'),
+                                                html.P(id='current-threshold', className='threshold-text', children='09:30:23')
+                                            ]
+                                        )
+                                    )
+                                )
+                            ]
+                        ),
+                        
+                    ]
+                ),
+                
+                html.Div(
+                    className='main-container-toggle',
+                    children=(
+                        DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60),
+                    )
+                )
+            )
+        ),
+
+
+        # Main Graph - Cancelled Delay
+        html.Div(
+            className='main-container hidden',
             children=(
                 html.Div(
                     className='main-container-toggle',
@@ -485,23 +585,23 @@ def update_output_cancelled(click_data, children):
     return get_default_line_graph()
 
 
-# # Callbacks for Fill Rate graph
-# @app.callback(
-#     Output('fill-rate-heatmap', 'figure'),
-#     Input('submit-fill-threshold', 'n_clicks'),
-#     Input('exchange', 'children'),
-#     State('input-fill-threshold', 'value')
-# )
-# def update_heatmap(n_clicks, children, threshold):
-#     return get_heatmap_figure(get_df(), threshold)
+# Callbacks for Fill Rate graph
+@app.callback(
+    Output('fill-rate-heatmap', 'figure'),
+    Input('submit-fill-threshold', 'n_clicks'),
+    Input('exchange-dropdown', 'value'),
+    State('input-fill-threshold', 'value')
+)
+def update_heatmap(n_clicks, children, threshold):
+    return get_heatmap_figure(get_df(), threshold)
 
-# @app.callback(
-#     Output('current-threshold', 'children'),
-#     Input('submit-fill-threshold', 'n_clicks'),
-#     State('input-fill-threshold', 'value')
-# )
-# def update_current_threshold(n_clicks, threshold):
-#     return f'Current Threshold: {threshold or DEFAULT_THRESHOLD} microseconds'
+@app.callback(
+    Output('current-threshold', 'children'),
+    Input('submit-fill-threshold', 'n_clicks'),
+    State('input-fill-threshold', 'value')
+)
+def update_current_threshold(n_clicks, threshold):
+    return f'{threshold or DEFAULT_THRESHOLD} Microseconds'
 
 
 # Callback for the exchange dropdownlist
