@@ -464,6 +464,7 @@ app.layout = html.Div(
                             children=[
                                 'Trade Volume',
                                 html.Div(
+                                    id='trade-selected',
                                     className='selected-item'
                                 )
                             ]
@@ -474,6 +475,7 @@ app.layout = html.Div(
                             children=[
                                 'Acknowledged Delay',
                                 html.Div(
+                                    id='acknowledged-selected',
                                     className='selected-item hidden'
                                 )
                             ]
@@ -484,6 +486,7 @@ app.layout = html.Div(
                             children=[
                                 'Fill Rate',
                                 html.Div(
+                                    id='fill-selected',
                                     className='selected-item hidden'
                                 )
                             ]
@@ -494,6 +497,7 @@ app.layout = html.Div(
                             children=[
                                 'Cancelled Delay',
                                 html.Div(
+                                    id='cancelled-selected',
                                     className='selected-item hidden'
                                 )
                             ]
@@ -590,7 +594,11 @@ def update_output(value):
     [Output('trade-volume-graph', 'className'),
      Output('acknowledged-delay-graph', 'className'),
      Output('fill-rate-graph', 'className'),
-     Output('cancelled-delay-graph', 'className')],
+     Output('cancelled-delay-graph', 'className'),
+     Output('trade-selected', 'className'),
+     Output('acknowledged-selected', 'className'),
+     Output('fill-selected', 'className'),
+     Output('cancelled-selected', 'className')],
     [Input('trade-volume-menu', 'n_clicks'),
      Input('acknowledged-delay-menu', 'n_clicks'),
      Input('fill-rate-menu', 'n_clicks'),
@@ -600,13 +608,18 @@ def update_output(value):
     [State('trade-volume-graph', 'className'),
      State('acknowledged-delay-graph', 'className'),
      State('fill-rate-graph', 'className'),
-     State('cancelled-delay-graph', 'className')]
+     State('cancelled-delay-graph', 'className'),
+     State('trade-selected', 'className'),
+     State('acknowledged-selected', 'className'),
+     State('fill-selected', 'className'),
+     State('cancelled-selected', 'className')]
 )
 def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks,
-                   trade_class, acknowledged_class, fill_class, cancelled_class):
+                   trade_class, acknowledged_class, fill_class, cancelled_class,
+                   trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class):
     # If no buttons were clicked, return nothing
     if all(clicks is None for clicks in [trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks]):
-        return trade_class, acknowledged_class, fill_class, cancelled_class
+        return trade_class, acknowledged_class, fill_class, cancelled_class, trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class
 
     # Getting the input of the triggered button
     ctx = callback_context
@@ -618,25 +631,31 @@ def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_cli
     # Setting the proper graph depending on the input button
     if triggered_id == 'trade-volume-menu':
         set_graph(1)
-        return set_trade_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+        return set_trade_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     elif triggered_id == 'acknowledged-delay-menu':
         set_graph(2)
-        return set_acknowledged_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+        return set_acknowledged_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     elif triggered_id == 'fill-rate-menu':
         set_graph(3)
-        return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+        return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     elif triggered_id == 'cancelled-delay-menu':
         set_graph(4)
-        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     elif triggered_id == 'chevron-left':
-        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     else:
-        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
 
 
 if __name__ == '__main__':
