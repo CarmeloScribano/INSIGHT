@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-from dash import Dash, html, dcc, Output, Input, State
+from dash import Dash, html, dcc, Output, Input, State, callback, callback_context
 from dash_iconify import DashIconify
 from dash.exceptions import PreventUpdate
 from graphs.ingestor import get_data_frame
@@ -19,6 +19,11 @@ DFS = {
 }
 
 current_exchange = 'Exchange 1'
+current_graph = 1
+
+def set_graph(graph):
+    global current_graph
+    current_graph = graph
 
 def get_df():
     return DFS[current_exchange]
@@ -141,17 +146,22 @@ app.layout = html.Div(
 
         # Main Graph - Trade Volume
         html.Div(
-            id='trade-volume-graph',
-            className='main-container hidden',
+            className='main-container',
             children=(
                 html.Div(
+                    id='chevron-left', 
                     className='main-container-toggle',
                     children=(
-                        DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60),
+                        html.Button(
+                            children=(DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60))
+                        )
                     )
                 ),
 
+
+                # Main Graph - Trade Volume
                 html.Div(
+                    id='trade-volume-graph',
                     children=[
                         html.Div(
                             className='horizontal-align',
@@ -206,30 +216,11 @@ app.layout = html.Div(
                     ]
                 ),
                 
-                html.Div(
-                    className='main-container-toggle',
-                    children=(
-                        DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60),
-                    )
-                )
-            )
-        ),
-    
 
-        # Main Graph - Acknowledged Delay
-        html.Div(
-            id='ackowledged-delay-graph',
-            className='main-container',
-            children=(
+                # Main Graph - Acknowledged Delay
                 html.Div(
-                    className='main-container-toggle',
-                    children=(
-                        DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60),
-                    )
-                ),
-
-                html.Div(
-                    className='horizontal-align',
+                    id='acknowledged-delay-graph',
+                    className='horizontal-align hidden',
                     children=[
                         html.Div(
                             className='graph',
@@ -292,30 +283,11 @@ app.layout = html.Div(
                     ]
                 ),
                 
-                html.Div(
-                    className='main-container-toggle',
-                    children=(
-                        DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60),
-                    )
-                )
-            )
-        ),
 
-
-        # Main Graph - Fill Rate
-        html.Div(
-            id='fill-rate-graph',
-            className='main-container hidden',
-            children=(
+                # Main Graph - Fill Rate
                 html.Div(
-                    className='main-container-toggle',
-                    children=(
-                        DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60),
-                    )
-                ),
-
-                html.Div(
-                    className='horizontal-align',
+                    id='fill-rate-graph',
+                    className='horizontal-align hidden',
                     children=[
                         html.Div(
                             className='graph',
@@ -393,30 +365,11 @@ app.layout = html.Div(
                     ]
                 ),
                 
-                html.Div(
-                    className='main-container-toggle',
-                    children=(
-                        DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60),
-                    )
-                )
-            )
-        ),
 
-
-        # Main Graph - Cancelled Delay
-        html.Div(
-            id='cancelled-delay-graph',
-            className='main-container hidden',
-            children=(
+                # Main Graph - Cancelled Delay
                 html.Div(
-                    className='main-container-toggle',
-                    children=(
-                        DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60),
-                    )
-                ),
-
-                html.Div(
-                    className='horizontal-align',
+                    id='cancelled-delay-graph',
+                    className='horizontal-align hidden',
                     children=[
                         html.Div(
                             className='graph',
@@ -478,16 +431,20 @@ app.layout = html.Div(
                         
                     ]
                 ),
-                
+
+
                 html.Div(
+                    id='chevron-right', 
                     className='main-container-toggle',
                     children=(
-                        DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60),
+                        html.Button(
+                            children=(DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60))
+                        )
                     )
                 )
             )
         ),
-    
+
 
         # Chart Links
         html.Div(
@@ -508,7 +465,7 @@ app.layout = html.Div(
                             ]
                         ),
                         html.Button(
-                            id='ackowledged-delay-menu',
+                            id='acknowledged-delay-menu',
                             className='chart-menu-button',
                             children=[
                                 'Acknowledged Delay',
@@ -627,26 +584,28 @@ def update_output(value):
 # Callback for graph menu buttons
 @app.callback(
     [Output('trade-volume-graph', 'className'),
-     Output('ackowledged-delay-graph', 'className'),
+     Output('acknowledged-delay-graph', 'className'),
      Output('fill-rate-graph', 'className'),
      Output('cancelled-delay-graph', 'className')],
     [Input('trade-volume-menu', 'n_clicks'),
-     Input('ackowledged-delay-menu', 'n_clicks'),
+     Input('acknowledged-delay-menu', 'n_clicks'),
      Input('fill-rate-menu', 'n_clicks'),
-     Input('cancelled-delay-menu', 'n_clicks')],
+     Input('cancelled-delay-menu', 'n_clicks'),
+     Input('chevron-left', 'n_clicks'),
+     Input('chevron-right', 'n_clicks')],
     [State('trade-volume-graph', 'className'),
-     State('ackowledged-delay-graph', 'className'),
+     State('acknowledged-delay-graph', 'className'),
      State('fill-rate-graph', 'className'),
      State('cancelled-delay-graph', 'className')]
 )
-def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, 
+def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks,
                    trade_class, acknowledged_class, fill_class, cancelled_class):
     # If no buttons were clicked, return nothing
     if all(clicks is None for clicks in [trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks]):
         return trade_class, acknowledged_class, fill_class, cancelled_class
 
     # Getting the input of the triggered button
-    ctx = Dash.callback_context
+    ctx = callback_context
     if not ctx.triggered:
         raise PreventUpdate
     
@@ -654,29 +613,33 @@ def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_cli
 
     # Setting the proper graph depending on the input button
     if triggered_id == 'trade-volume-menu':
-        print('got it 1')
+        set_graph(1)
         new_trade = trade_class.replace('hidden', '').strip()
         new_acknowledged = acknowledged_class + ' hidden'
         new_fill = fill_class + ' hidden'
         new_cancelled = cancelled_class + ' hidden'
     elif triggered_id == 'ackowledged-delay-menu':
-        print('got it 2')
+        set_graph(2)
         new_trade = trade_class + ' hidden'
         new_acknowledged = acknowledged_class.replace('hidden', '').strip()
         new_fill = fill_class + ' hidden'
         new_cancelled = cancelled_class + ' hidden'
     elif triggered_id == 'fill-rate-menu':
-        print('got it 3')
+        set_graph(3)
         new_trade = trade_class + ' hidden'
         new_acknowledged = acknowledged_class + ' hidden'
         new_fill = fill_class.replace('hidden', '').strip()
         new_cancelled = cancelled_class + ' hidden'
-    else:
-        print('got it 4')
+    elif triggered_id == 'cancelled-delay':
+        set_graph(4)
         new_trade = trade_class + ' hidden'
         new_acknowledged = acknowledged_class + ' hidden'
         new_fill = fill_class + ' hidden'
         new_cancelled = cancelled_class.replace('hidden', '').strip()
+    elif triggered_id == 'chevron-left':
+        print('left')
+    else:
+        print('right')
 
     return new_trade, new_acknowledged, new_fill, new_cancelled
 
