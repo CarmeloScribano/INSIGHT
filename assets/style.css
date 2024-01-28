@@ -325,7 +325,16 @@ html > * {
 /* Chart menu styling */
 .chevron-button {
     background-color: var(--primary);
+    color: var(--white);
     border: none;
+}
+
+.chevron-button :hover {
+    color: #AB62FA;
+}
+
+.chevron-button :active {
+    color: #0819EF;
 }
 
 .chart-menu-button {

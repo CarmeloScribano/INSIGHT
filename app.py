@@ -155,7 +155,7 @@ app.layout = html.Div(
                     children=(
                         html.Button(
                             className='chevron-button',
-                            children=(DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60))
+                            children=(DashIconify(icon='bi:chevron-left', style={'paddingRight': '1vw'}, width=60))
                         )
                     )
                 ),
@@ -442,7 +442,7 @@ app.layout = html.Div(
                     children=(
                         html.Button(
                             className='chevron-button',
-                            children=(DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60))
+                            children=(DashIconify(icon='bi:chevron-right', style={'paddingLeft': '1vw'}, width=60))
                         )
                     )
                 )
