@@ -269,26 +269,15 @@ html > * {
 
 
 /* Fill Rate graph styling */
-.anomaly-container-fill-rate {
-    background-color: var(--secondary);
-    border-radius: var(--border-radius);
-    width: 29vw;
-    height: 19vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2vh 0 1.5vh 1vw;
-}
-
 .select-threshold-container {
     background-image: linear-gradient(to bottom left, #AB62FA, #0819EF);
     border-radius: var(--border-radius);
     width: 29vw;
-    height: 19vh;
+    height: 22vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 0 0 1vw;
+    margin: 1vh 0 0 1vw;
 }
 
 .dash-input {
@@ -315,11 +304,11 @@ html > * {
     background-color: var(--secondary);
     border-radius: var(--border-radius);
     width: 29vw;
-    height: 19vh;
+    height: 22vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1.5vh 0 0 1vw;
+    margin: 1vh 0 0 1vw;
 }
 
 .threshold-text {

@@ -595,6 +595,10 @@ def update_output(value):
      Output('acknowledged-delay-graph', 'className'),
      Output('fill-rate-graph', 'className'),
      Output('cancelled-delay-graph', 'className'),
+     Output('trade-volume-menu', 'className'),
+     Output('acknowledged-delay-menu', 'className'),
+     Output('fill-rate-menu', 'className'),
+     Output('cancelled-delay-menu', 'className'),
      Output('trade-selected', 'className'),
      Output('acknowledged-selected', 'className'),
      Output('fill-selected', 'className'),
@@ -609,6 +613,10 @@ def update_output(value):
      State('acknowledged-delay-graph', 'className'),
      State('fill-rate-graph', 'className'),
      State('cancelled-delay-graph', 'className'),
+     State('trade-volume-menu', 'className'),
+     State('acknowledged-delay-menu', 'className'),
+     State('fill-rate-menu', 'className'),
+     State('cancelled-delay-menu', 'className'),
      State('trade-selected', 'className'),
      State('acknowledged-selected', 'className'),
      State('fill-selected', 'className'),
@@ -616,45 +624,52 @@ def update_output(value):
 )
 def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks,
                    trade_class, acknowledged_class, fill_class, cancelled_class,
+                   trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class):
     # If no buttons were clicked, return nothing
     if all(clicks is None for clicks in [trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks]):
-        return trade_class, acknowledged_class, fill_class, cancelled_class, trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class
+        return trade_class, acknowledged_class, fill_class, cancelled_class, trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class, trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class
 
     # Getting the input of the triggered button
     ctx = callback_context
     if not ctx.triggered:
         raise PreventUpdate
     triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    print(triggered_id)
+    #print(triggered_id)
 
     # Setting the proper graph depending on the input button
     if triggered_id == 'trade-volume-menu':
         set_graph(1)
         return set_trade_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
             trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     elif triggered_id == 'acknowledged-delay-menu':
         set_graph(2)
         return set_acknowledged_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
             trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     elif triggered_id == 'fill-rate-menu':
         set_graph(3)
-        return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+        return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class,
+            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class, 
             trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     elif triggered_id == 'cancelled-delay-menu':
         set_graph(4)
         return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
             trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     elif triggered_id == 'chevron-left':
         return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
             trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     else:
         return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
             trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
 
 
