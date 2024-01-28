@@ -626,6 +626,8 @@ def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_cli
                    trade_class, acknowledged_class, fill_class, cancelled_class,
                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class):
+    global current_graph
+
     # If no buttons were clicked, return nothing
     if all(clicks is None for clicks in [trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks]):
         return trade_class, acknowledged_class, fill_class, cancelled_class, trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class, trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class
@@ -635,7 +637,6 @@ def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_cli
     if not ctx.triggered:
         raise PreventUpdate
     triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    #print(triggered_id)
 
     # Setting the proper graph depending on the input button
     if triggered_id == 'trade-volume-menu':
@@ -663,14 +664,50 @@ def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_cli
             trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     elif triggered_id == 'chevron-left':
-        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+        match current_graph:
+            case 1:
+                set_graph(4)
+                return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
+                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+            case 2:
+                set_graph(1)
+                return set_trade_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
+                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+            case 3:
+                set_graph(2)
+                return set_acknowledged_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
+                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+            case _:
+                set_graph(3)
+                return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class,
+                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class, 
+                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
     
     else:
-        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+        match current_graph:
+            case 1:
+                set_graph(2)
+                return set_acknowledged_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
+                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+            case 2:
+                set_graph(3)
+                return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
+                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+            case 3:
+                set_graph(4)
+                return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
+                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+            case _:
+                set_graph(1)
+                return set_trade_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
+                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
+                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
 
 
 if __name__ == '__main__':
