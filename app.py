@@ -9,6 +9,7 @@ from graphs.treemap import get_graph_data, get_line_graph_data, get_default_line
 from graphs.fill_rate import DEFAULT_THRESHOLD, get_heatmap_figure
 from graphs.acked_order_graph import get_acked_figure
 from graphs.cancelled_order_graph import get_cancelled_graph
+from graphs.graph_menu import set_trade_graph, set_acknowledged_graph, set_fill_graph, set_cancelled_graph
 
 pd.options.mode.copy_on_write = True
 
@@ -153,6 +154,7 @@ app.layout = html.Div(
                     className='main-container-toggle',
                     children=(
                         html.Button(
+                            className='chevron-button',
                             children=(DashIconify(icon='bi:chevron-left', className='white', style={'paddingRight': '1vw'}, width=60))
                         )
                     )
@@ -162,6 +164,7 @@ app.layout = html.Div(
                 # Main Graph - Trade Volume
                 html.Div(
                     id='trade-volume-graph',
+                    className='',
                     children=[
                         html.Div(
                             className='horizontal-align',
@@ -306,7 +309,7 @@ app.layout = html.Div(
                         html.Div(
                             children=[
                                 html.Div(
-                                    className='anomaly-container-fill-rate text-center',
+                                    className='anomaly-container-delay text-center',
                                     children=(
                                         html.Div(
                                             children=[
@@ -438,6 +441,7 @@ app.layout = html.Div(
                     className='main-container-toggle',
                     children=(
                         html.Button(
+                            className='chevron-button',
                             children=(DashIconify(icon='bi:chevron-right', className='white', style={'paddingLeft': '1vw'}, width=60))
                         )
                     )
@@ -601,47 +605,38 @@ def update_output(value):
 def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks,
                    trade_class, acknowledged_class, fill_class, cancelled_class):
     # If no buttons were clicked, return nothing
-    if all(clicks is None for clicks in [trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks]):
+    if all(clicks is None for clicks in [trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks]):
         return trade_class, acknowledged_class, fill_class, cancelled_class
 
     # Getting the input of the triggered button
     ctx = callback_context
     if not ctx.triggered:
         raise PreventUpdate
-    
     triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    print(triggered_id)
 
     # Setting the proper graph depending on the input button
     if triggered_id == 'trade-volume-menu':
         set_graph(1)
-        new_trade = trade_class.replace('hidden', '').strip()
-        new_acknowledged = acknowledged_class + ' hidden'
-        new_fill = fill_class + ' hidden'
-        new_cancelled = cancelled_class + ' hidden'
-    elif triggered_id == 'ackowledged-delay-menu':
+        return set_trade_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+    
+    elif triggered_id == 'acknowledged-delay-menu':
         set_graph(2)
-        new_trade = trade_class + ' hidden'
-        new_acknowledged = acknowledged_class.replace('hidden', '').strip()
-        new_fill = fill_class + ' hidden'
-        new_cancelled = cancelled_class + ' hidden'
+        return set_acknowledged_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+    
     elif triggered_id == 'fill-rate-menu':
         set_graph(3)
-        new_trade = trade_class + ' hidden'
-        new_acknowledged = acknowledged_class + ' hidden'
-        new_fill = fill_class.replace('hidden', '').strip()
-        new_cancelled = cancelled_class + ' hidden'
-    elif triggered_id == 'cancelled-delay':
+        return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+    
+    elif triggered_id == 'cancelled-delay-menu':
         set_graph(4)
-        new_trade = trade_class + ' hidden'
-        new_acknowledged = acknowledged_class + ' hidden'
-        new_fill = fill_class + ' hidden'
-        new_cancelled = cancelled_class.replace('hidden', '').strip()
+        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+    
     elif triggered_id == 'chevron-left':
-        print('left')
+        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
+    
     else:
-        print('right')
-
-    return new_trade, new_acknowledged, new_fill, new_cancelled
+        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class)
 
 
 if __name__ == '__main__':

@@ -334,6 +334,11 @@ html > * {
 
 
 /* Chart menu styling */
+.chevron-button {
+    background-color: var(--primary);
+    border: none;
+}
+
 .chart-menu-button {
     color: var(--white);
     background-color: var(--primary);
