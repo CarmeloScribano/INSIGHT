@@ -343,7 +343,7 @@ html > * {
     border: none;
     font-size: 16px;
     font-family: 'Inter', sans-serif;
-    margin: 2vh 7vw 0 7vw;
+    margin: 0 7vw 0 7vw;
 }
 
 .active-chart {
