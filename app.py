@@ -1,7 +1,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-from dash import Dash, html, dcc, Output, Input, State, callback, callback_context
+from dash import Dash, html, dcc, Output, Input, State, callback_context
 from dash_iconify import DashIconify
 from dash.exceptions import PreventUpdate
 from graphs.ingestor import get_data_frame
@@ -11,7 +11,9 @@ from graphs.acked_order_graph import get_acked_figure
 from graphs.cancelled_order_graph import get_cancelled_graph
 from graphs.graph_menu import set_trade_graph, get_current_graph, set_acknowledged_graph, set_fill_graph, set_cancelled_graph
 
+
 pd.options.mode.copy_on_write = True
+
 
 DFS = {
     'Exchange 1' : get_data_frame('Exchange_1'),
@@ -27,6 +29,7 @@ def get_df():
 def set_exchange(exchange):
     global current_exchange
     current_exchange = exchange
+
 
 app = Dash(__name__)
 
@@ -133,11 +136,7 @@ app.layout = html.Div(
         
 
         # Divider Bar
-        html.Hr(
-            style={
-                'width': '50vw'
-            }
-        ),
+        html.Hr(style={'width': '50vw'}),
 
 
         # Main Graph - Trade Volume
@@ -147,12 +146,7 @@ app.layout = html.Div(
                 html.Div(
                     id='chevron-left', 
                     className='main-container-toggle',
-                    children=(
-                        html.Button(
-                            className='chevron-button',
-                            children=(DashIconify(icon='bi:chevron-left', style={'paddingRight': '1vw'}, width=60))
-                        )
-                    )
+                    children=(html.Button(className='chevron-button', children=(DashIconify(icon='bi:chevron-left', style={'paddingRight': '1vw'}, width=60))))
                 ),
 
 
@@ -434,12 +428,7 @@ app.layout = html.Div(
                 html.Div(
                     id='chevron-right', 
                     className='main-container-toggle',
-                    children=(
-                        html.Button(
-                            className='chevron-button',
-                            children=(DashIconify(icon='bi:chevron-right', style={'paddingLeft': '1vw'}, width=60))
-                        )
-                    )
+                    children=(html.Button(className='chevron-button', children=(DashIconify(icon='bi:chevron-right', style={'paddingLeft': '1vw'}, width=60))))
                 )
             )
         ),
@@ -456,46 +445,22 @@ app.layout = html.Div(
                         html.Button(
                             id='trade-volume-menu',
                             className='chart-menu-button active-chart',
-                            children=[
-                                'Trade Volume',
-                                html.Div(
-                                    id='trade-selected',
-                                    className='selected-item'
-                                )
-                            ]
+                            children=['Trade Volume', html.Div(id='trade-selected', className='selected-item')]
                         ),
                         html.Button(
                             id='acknowledged-delay-menu',
                             className='chart-menu-button',
-                            children=[
-                                'Acknowledged Delay',
-                                html.Div(
-                                    id='acknowledged-selected',
-                                    className='selected-item hidden'
-                                )
-                            ]
+                            children=['Acknowledged Delay', html.Div(id='acknowledged-selected', className='selected-item hidden')]
                         ),
                         html.Button(
                             id='fill-rate-menu',
                             className='chart-menu-button',
-                            children=[
-                                'Fill Rate',
-                                html.Div(
-                                    id='fill-selected',
-                                    className='selected-item hidden'
-                                )
-                            ]
+                            children=['Fill Rate', html.Div(id='fill-selected', className='selected-item hidden')]
                         ),
                         html.Button(
                             id='cancelled-delay-menu',
                             className='chart-menu-button',
-                            children=[
-                                'Cancelled Delay',
-                                html.Div(
-                                    id='cancelled-selected',
-                                    className='selected-item hidden'
-                                )
-                            ]
+                            children=['Cancelled Delay', html.Div(id='cancelled-selected', className='selected-item hidden')]
                         )
                     ]
                 )
@@ -586,46 +551,41 @@ def update_output(value):
 
 # Callback for graph menu buttons
 @app.callback(
-    [Output('trade-volume-graph', 'className'),
-     Output('acknowledged-delay-graph', 'className'),
-     Output('fill-rate-graph', 'className'),
-     Output('cancelled-delay-graph', 'className'),
-     Output('trade-volume-menu', 'className'),
-     Output('acknowledged-delay-menu', 'className'),
-     Output('fill-rate-menu', 'className'),
-     Output('cancelled-delay-menu', 'className'),
-     Output('trade-selected', 'className'),
-     Output('acknowledged-selected', 'className'),
-     Output('fill-selected', 'className'),
-     Output('cancelled-selected', 'className')],
-    [Input('trade-volume-menu', 'n_clicks'),
-     Input('acknowledged-delay-menu', 'n_clicks'),
-     Input('fill-rate-menu', 'n_clicks'),
-     Input('cancelled-delay-menu', 'n_clicks'),
-     Input('chevron-left', 'n_clicks'),
-     Input('chevron-right', 'n_clicks')],
-    [State('trade-volume-graph', 'className'),
-     State('acknowledged-delay-graph', 'className'),
-     State('fill-rate-graph', 'className'),
-     State('cancelled-delay-graph', 'className'),
-     State('trade-volume-menu', 'className'),
-     State('acknowledged-delay-menu', 'className'),
-     State('fill-rate-menu', 'className'),
-     State('cancelled-delay-menu', 'className'),
-     State('trade-selected', 'className'),
-     State('acknowledged-selected', 'className'),
-     State('fill-selected', 'className'),
-     State('cancelled-selected', 'className')]
+    [
+        Output('trade-volume-graph', 'className'), Output('acknowledged-delay-graph', 'className'), Output('fill-rate-graph', 'className'), Output('cancelled-delay-graph', 'className'),
+        Output('trade-volume-menu', 'className'), Output('acknowledged-delay-menu', 'className'), Output('fill-rate-menu', 'className'), Output('cancelled-delay-menu', 'className'),
+        Output('trade-selected', 'className'), Output('acknowledged-selected', 'className'), Output('fill-selected', 'className'), Output('cancelled-selected', 'className')
+    ],
+    [
+        Input('trade-volume-menu', 'n_clicks'), Input('acknowledged-delay-menu', 'n_clicks'), Input('fill-rate-menu', 'n_clicks'),
+        Input('cancelled-delay-menu', 'n_clicks'), Input('chevron-left', 'n_clicks'), Input('chevron-right', 'n_clicks')
+    ],
+    [
+        State('trade-volume-graph', 'className'), State('acknowledged-delay-graph', 'className'), State('fill-rate-graph', 'className'), State('cancelled-delay-graph', 'className'), 
+        State('trade-volume-menu', 'className'), State('acknowledged-delay-menu', 'className'), State('fill-rate-menu', 'className'), State('cancelled-delay-menu', 'className'),
+        State('trade-selected', 'className'), State('acknowledged-selected', 'className'), State('fill-selected', 'className'), State('cancelled-selected', 'className')
+    ]
 )
-def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks,
-                   trade_class, acknowledged_class, fill_class, cancelled_class,
-                   trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-                   trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class):
-    global current_graph
+def update_classes(
+        trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks,
+        trade_class, acknowledged_class, fill_class, cancelled_class,
+        trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
+        trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class
+    ):
+
+    args = (
+        trade_class, acknowledged_class, fill_class, cancelled_class, 
+        trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class, 
+        trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class
+    )
 
     # If no buttons were clicked, return nothing
     if all(clicks is None for clicks in [trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, left_clicks, right_clicks]):
-        return trade_class, acknowledged_class, fill_class, cancelled_class, trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class, trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class
+        return (
+            trade_class, acknowledged_class, fill_class, cancelled_class, 
+            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class, 
+            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class
+        )
 
     # Getting the input of the triggered button
     ctx = callback_context
@@ -635,62 +595,33 @@ def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_cli
 
     # Setting the proper graph depending on the input button
     if triggered_id == 'trade-volume-menu':
-        return set_trade_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
-    
+        return set_trade_graph(*args)
     elif triggered_id == 'acknowledged-delay-menu':
-        return set_acknowledged_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
-    
+        return set_acknowledged_graph(*args)
     elif triggered_id == 'fill-rate-menu':
-        return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class,
-            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class, 
-            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
-    
+        return set_fill_graph(*args)
     elif triggered_id == 'cancelled-delay-menu':
-        return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-            trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-            trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
-    
+        return set_cancelled_graph(*args)
     elif triggered_id == 'chevron-left':
         match get_current_graph():
             case 1:
-                return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+                return set_cancelled_graph(*args)
             case 2:
-                return set_trade_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+                return set_trade_graph(*args)
             case 3:
-                return set_acknowledged_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+                return set_acknowledged_graph(*args)
             case _:
-                return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class,
-                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class, 
-                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
-    
+                return set_fill_graph(*args)
     else:
         match get_current_graph():
             case 1:
-                return set_acknowledged_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+                return set_acknowledged_graph(*args)
             case 2:
-                return set_fill_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+                return set_fill_graph(*args)
             case 3:
-                return set_cancelled_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+                return set_cancelled_graph(*args)
             case _:
-                return set_trade_graph(trade_class, acknowledged_class, fill_class, cancelled_class, 
-                    trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
-                    trade_selected_class, acknowledged_selected_class, fill_selected_class, cancelled_selected_class)
+                return set_trade_graph(*args)
 
 
 if __name__ == '__main__':
