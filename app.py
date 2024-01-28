@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 
 from dash import Dash, html, dcc, Output, Input, State
 from dash_iconify import DashIconify
+from dash.exceptions import PreventUpdate
 from graphs.ingestor import get_data_frame
 from graphs.treemap import get_graph_data, get_line_graph_data, get_default_line_graph
 from graphs.fill_rate import DEFAULT_THRESHOLD, get_heatmap_figure
@@ -140,6 +141,7 @@ app.layout = html.Div(
 
         # Main Graph - Trade Volume
         html.Div(
+            id='trade-volume-graph',
             className='main-container hidden',
             children=(
                 html.Div(
@@ -216,7 +218,8 @@ app.layout = html.Div(
 
         # Main Graph - Acknowledged Delay
         html.Div(
-            className='main-container hidden',
+            id='ackowledged-delay-graph',
+            className='main-container',
             children=(
                 html.Div(
                     className='main-container-toggle',
@@ -301,7 +304,8 @@ app.layout = html.Div(
 
         # Main Graph - Fill Rate
         html.Div(
-            className='main-container',
+            id='fill-rate-graph',
+            className='main-container hidden',
             children=(
                 html.Div(
                     className='main-container-toggle',
@@ -401,6 +405,7 @@ app.layout = html.Div(
 
         # Main Graph - Cancelled Delay
         html.Div(
+            id='cancelled-delay-graph',
             className='main-container hidden',
             children=(
                 html.Div(
@@ -488,10 +493,12 @@ app.layout = html.Div(
         html.Div(
             className='',
             children=[
+                html.P(id='menu-output'),
                 html.Div(
                     className='text-center',
                     children=[
                         html.Button(
+                            id='trade-volume-menu',
                             className='chart-menu-button active-chart',
                             children=[
                                 'Trade Volume',
@@ -501,6 +508,7 @@ app.layout = html.Div(
                             ]
                         ),
                         html.Button(
+                            id='ackowledged-delay-menu',
                             className='chart-menu-button',
                             children=[
                                 'Acknowledged Delay',
@@ -510,6 +518,7 @@ app.layout = html.Div(
                             ]
                         ),
                         html.Button(
+                            id='fill-rate-menu',
                             className='chart-menu-button',
                             children=[
                                 'Fill Rate',
@@ -519,6 +528,7 @@ app.layout = html.Div(
                             ]
                         ),
                         html.Button(
+                            id='cancelled-delay-menu',
                             className='chart-menu-button',
                             children=[
                                 'Cancelled Delay',
@@ -612,6 +622,63 @@ def update_current_threshold(n_clicks, threshold):
 def update_output(value):
     set_exchange(value)
     return 'Current Exchange'
+
+
+# Callback for graph menu buttons
+@app.callback(
+    [Output('trade-volume-graph', 'className'),
+     Output('ackowledged-delay-graph', 'className'),
+     Output('fill-rate-graph', 'className'),
+     Output('cancelled-delay-graph', 'className')],
+    [Input('trade-volume-menu', 'n_clicks'),
+     Input('ackowledged-delay-menu', 'n_clicks'),
+     Input('fill-rate-menu', 'n_clicks'),
+     Input('cancelled-delay-menu', 'n_clicks')],
+    [State('trade-volume-graph', 'className'),
+     State('ackowledged-delay-graph', 'className'),
+     State('fill-rate-graph', 'className'),
+     State('cancelled-delay-graph', 'className')]
+)
+def update_classes(trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks, 
+                   trade_class, acknowledged_class, fill_class, cancelled_class):
+    # If no buttons were clicked, return nothing
+    if all(clicks is None for clicks in [trade_clicks, acknowledged_clicks, fill_clicks, cancelled_clicks]):
+        return trade_class, acknowledged_class, fill_class, cancelled_class
+
+    # Getting the input of the triggered button
+    ctx = Dash.callback_context
+    if not ctx.triggered:
+        raise PreventUpdate
+    
+    triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    # Setting the proper graph depending on the input button
+    if triggered_id == 'trade-volume-menu':
+        print('got it 1')
+        new_trade = trade_class.replace('hidden', '').strip()
+        new_acknowledged = acknowledged_class + ' hidden'
+        new_fill = fill_class + ' hidden'
+        new_cancelled = cancelled_class + ' hidden'
+    elif triggered_id == 'ackowledged-delay-menu':
+        print('got it 2')
+        new_trade = trade_class + ' hidden'
+        new_acknowledged = acknowledged_class.replace('hidden', '').strip()
+        new_fill = fill_class + ' hidden'
+        new_cancelled = cancelled_class + ' hidden'
+    elif triggered_id == 'fill-rate-menu':
+        print('got it 3')
+        new_trade = trade_class + ' hidden'
+        new_acknowledged = acknowledged_class + ' hidden'
+        new_fill = fill_class.replace('hidden', '').strip()
+        new_cancelled = cancelled_class + ' hidden'
+    else:
+        print('got it 4')
+        new_trade = trade_class + ' hidden'
+        new_acknowledged = acknowledged_class + ' hidden'
+        new_fill = fill_class + ' hidden'
+        new_cancelled = cancelled_class.replace('hidden', '').strip()
+
+    return new_trade, new_acknowledged, new_fill, new_cancelled
 
 
 if __name__ == '__main__':
