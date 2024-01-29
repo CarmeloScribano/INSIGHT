@@ -51,6 +51,7 @@ def set_trade_graph(
             new_trade_select, new_acknowledged_select, new_fill_select, new_cancelled_select
         )
 
+
 def set_acknowledged_graph(
         trade_class, acknowledged_class, fill_class, cancelled_class,
         trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
@@ -91,6 +92,7 @@ def set_acknowledged_graph(
             new_trade_select, new_acknowledged_select, new_fill_select, new_cancelled_select
         )
 
+
 def set_fill_graph(
         trade_class, acknowledged_class, fill_class, cancelled_class,
         trade_menu_class, acknowledged_menu_class, fill_menu_class, cancelled_menu_class,
@@ -130,6 +132,7 @@ def set_fill_graph(
             new_trade_menu, new_acknowledged_menu, new_fill_menu, new_cancelled_menu, 
             new_trade_select, new_acknowledged_select, new_fill_select, new_cancelled_select
         )
+
 
 def set_cancelled_graph(
         trade_class, acknowledged_class, fill_class, cancelled_class,
